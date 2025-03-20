@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "909706972967",
+    "project_id": "instantcars-14948",
+    "storage_bucket": "instantcars-14948.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:909706972967:android:a47fc01fb4f30105d5a302",
+        "android_client_info": {
+          "package_name": "com.domingo.instantcars"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApNrfsRBP77gCFBawo86tX7iV_M-4k8Ck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

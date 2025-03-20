@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">InstantCars</string>
+    <string name="correo_electronico">Correo electronico</string>
+    <string name="contrase_a">Contraseña</string>
+    <string name="iniciar_sesi_n">Iniciar Sesión</string>
+    <string name="Usuario">Usuario</string>
+    <string name="nombre_de_usuario">Nombre de Usuario</string>
+    <string name="crear_cuenta">CREAR CUENTA</string>
+    <string name="o_crear_cuenta_con">O Crear cuenta con</string>
+    <string name="o_inicia_sesi_n_con">O inicia sesión con</string>
+    <string name="no_tienes_cuenta_crea_una_ahora">¿No tienes cuenta? Crea una ahora</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="registrate">Registrate</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="ya_tienes_cuenta_inicia_sesi_n">¿YA TIENES CUENTA? INICIA SESIÓN</string>
+</resources>
