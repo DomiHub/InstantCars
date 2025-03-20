@@ -10,4 +10,3 @@ lo que te permite ponerte en contacto para la venta en cualquier momento y lugar
 A través de la app, puedes poner tu coche a la venta, contactar con posibles compradores y empezar a negociar de forma segura y eficiente.
 
 
-
