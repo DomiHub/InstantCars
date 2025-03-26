@@ -14,4 +14,5 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="ya_tienes_cuenta_inicia_sesi_n">¿YA TIENES CUENTA? INICIA SESIÓN</string>
     <string name="bot_n_para_abrir_men_de_usuario">Botón para abrir menú de usuario</string>
+    <string name="agregar">Agregar</string>
 </resources>

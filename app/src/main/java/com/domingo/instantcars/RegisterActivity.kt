@@ -66,7 +66,10 @@ class RegisterActivity : AppCompatActivity() {
                             .set(userData)
                             .addOnSuccessListener {
                                 Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
-                                // Redirige al usuario a la siguiente pantalla (Aún en desarrollo)
+
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
                             }
                             .addOnFailureListener { e ->
                                 Toast.makeText(this, "Error guardando datos: ${e.message}", Toast.LENGTH_LONG).show()

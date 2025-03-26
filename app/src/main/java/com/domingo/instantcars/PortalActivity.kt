@@ -49,13 +49,9 @@ class PortalActivity : AppCompatActivity() {
                         // Usuario autenticado correctamente
                         Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
 
-
-                        // Redirige al usuario a la siguiente pantalla (Aún en desarrollo)
-                        /*
-                        val intent = Intent(this, PortalActivity::class.java)
+                        val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish() // Evita que vuelva a la pantalla de login con el botón atrás
-                         */
 
                     } else {
                         // Error al iniciar sesión

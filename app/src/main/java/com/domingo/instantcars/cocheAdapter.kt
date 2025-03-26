@@ -29,13 +29,13 @@ class cocheAdapter(private val listaCoches: List<Coche>) : RecyclerView.Adapter<
         holder.txtModelo.text = coche.modelo
         holder.txtPrecio.text = "Precio: $${coche.precio}"
 
-        // 🔥 Cargar imagen SIN Glide ni Picasso
+        //Cargar imagen SIN Glide ni Picasso
         cargarImagenDesdeFirebase(coche.imagen, holder.imgCoche)
     }
 
     override fun getItemCount(): Int = listaCoches.size
 
-    // 🔥 Función para cargar imagen manualmente desde URL (Firebase Storage)
+    //Función para cargar imagen manualmente desde URL (Firebase Storage)
     private fun cargarImagenDesdeFirebase(urlImagen: String, imageView: ImageView) {
         val executor = Executors.newSingleThreadExecutor()
         executor.execute {
