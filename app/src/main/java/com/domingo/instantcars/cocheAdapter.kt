@@ -9,27 +9,27 @@ import androidx.recyclerview.widget.RecyclerView
 import android.graphics.BitmapFactory
 import java.util.concurrent.Executors
 
-class cocheAdapter(private val listaCoches: List<Coche>) : RecyclerView.Adapter<cocheAdapter.cocheViewHolder>() {
+class CocheAdapter(private val listaCoches: List<Coche>) : RecyclerView.Adapter<CocheAdapter.CocheViewHolder>() {
 
-    class cocheViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class CocheViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imgCoche: ImageView = itemView.findViewById(R.id.imgCoche)
         val txtMarca: TextView = itemView.findViewById(R.id.txtMarca)
         val txtModelo: TextView = itemView.findViewById(R.id.txtModelo)
         val txtPrecio: TextView = itemView.findViewById(R.id.txtPrecio)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): cocheViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CocheViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_coche, parent, false)
-        return cocheViewHolder(view)
+        return CocheViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: cocheViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CocheViewHolder, position: Int) {
         val coche = listaCoches[position]
         holder.txtMarca.text = coche.marca
         holder.txtModelo.text = coche.modelo
-        holder.txtPrecio.text = "Precio: $${coche.precio}"
+        holder.txtPrecio.text = "Precio: €${coche.precio}"
 
-        //Cargar imagen SIN Glide ni Picasso
+        //Cargar imagen
         cargarImagenDesdeFirebase(coche.imagen, holder.imgCoche)
     }
 

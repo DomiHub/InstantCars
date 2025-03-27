@@ -15,4 +15,15 @@
     <string name="ya_tienes_cuenta_inicia_sesi_n">¿YA TIENES CUENTA? INICIA SESIÓN</string>
     <string name="bot_n_para_abrir_men_de_usuario">Botón para abrir menú de usuario</string>
     <string name="agregar">Agregar</string>
+    <string name="seleccionar_imagen">Seleccionar Imagen</string>
+    <string name="guardar_coche">Guardar Coche</string>
+    <string name="descripci_n_del_coche">Descripción del coche</string>
+    <string name="precio_del_coche">Precio del coche</string>
+    <string name="a_o_del_coche">Año del coche</string>
+    <string name="modelo_del_coche">Modelo del coche</string>
+    <string name="marca_del_coche">Marca del coche</string>
+    <string name="agregar_un_nuevo_coche">Agregar un nuevo coche</string>
+    <string name="modelo">Modelo</string>
+    <string name="marca">Marca</string>
+    <string name="precio">Precio</string>
 </resources>

@@ -49,7 +49,7 @@ class PortalActivity : AppCompatActivity() {
                         // Usuario autenticado correctamente
                         Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
 
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, MainPageActivity::class.java)
                         startActivity(intent)
                         finish() // Evita que vuelva a la pantalla de login con el botón atrás
 

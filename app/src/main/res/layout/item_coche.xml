@@ -23,20 +23,20 @@
             android:id="@+id/txtMarca"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Marca"
+            android:text="@string/marca"
             android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/txtModelo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Modelo"/>
+            android:text="@string/modelo"/>
 
         <TextView
             android:id="@+id/txtPrecio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Precio"/>
+            android:text="@string/precio"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

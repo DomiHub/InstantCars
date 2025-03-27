@@ -67,7 +67,7 @@ class RegisterActivity : AppCompatActivity() {
                             .addOnSuccessListener {
                                 Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
 
-                                val intent = Intent(this, MainActivity::class.java)
+                                val intent = Intent(this, MainPageActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }
