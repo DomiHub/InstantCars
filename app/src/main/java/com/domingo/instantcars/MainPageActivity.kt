@@ -1,11 +1,87 @@
 package com.domingo.instantcars
 
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainPageActivity : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var cocheAdapter: CocheAdapter
+    private var listaCoches = mutableListOf<Coche>()
+    private lateinit var searchView: SearchView
+    private lateinit var fabAdd: FloatingActionButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_page)
+
+        // Inicializar vistas
+        recyclerView = findViewById(R.id.recyclerViewCoches)
+        searchView = findViewById(R.id.searchView)
+        fabAdd = findViewById(R.id.fabAdd)
+
+        // Configurar RecyclerView con GridLayoutManager (2 columnas)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        cocheAdapter = CocheAdapter(listaCoches)
+        recyclerView.adapter = cocheAdapter
+
+        // Cargar coches desde Firebase
+        cargarCochesDesdeFirebase()
+
+        // Configurar búsqueda en SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                filtrarCoches(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filtrarCoches(newText)
+                return true
+            }
+        })
+
+        // Botón flotante para agregar un coche (aquí puedes redirigir a otra actividad)
+        fabAdd.setOnClickListener {
+            // TODO: Redirigir a la actividad de agregar coche
+        }
+    }
+
+    private fun cargarCochesDesdeFirebase() {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("coches")
+            .get()
+            .addOnSuccessListener { documents ->
+                listaCoches.clear()
+                for (document in documents) {
+                    val coche = Coche(
+                        marca = document.getString("marca") ?: "",
+                        modelo = document.getString("modelo") ?: "",
+                        anio = document.getString("anio") ?: "",
+                        precio = document.getDouble("precio") ?: 0.0,
+                        imagen = document.getString("imagen") ?: "",
+                        subidoPor = document.getString("subidoPor") ?: "",
+                        descripcion = document.getString("descripcion") ?: ""
+                    )
+                    listaCoches.add(coche)
+                }
+                cocheAdapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener {
+                // Manejo de error
+            }
+    }
+    private fun filtrarCoches(query: String?) {
+        val listaFiltrada = listaCoches.filter {
+            it.marca.contains(query ?: "", ignoreCase = true) ||
+                    it.modelo.contains(query ?: "", ignoreCase = true)
+        }
+        cocheAdapter = CocheAdapter(listaFiltrada)
+        recyclerView.adapter = cocheAdapter
     }
 }
