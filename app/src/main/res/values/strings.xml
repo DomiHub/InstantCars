@@ -26,4 +26,8 @@
     <string name="modelo">Modelo</string>
     <string name="marca">Marca</string>
     <string name="precio">Precio</string>
+    <string name="subir_coche">Subir coche</string>
+    <string name="descripci_n_del_coche_estado_defectos_etc">Descripción del coche, estado, defectos, etc.</string>
+    <string name="kilometraje">Kilometraje</string>
+    <string name="volver">Volver</string>
 </resources>

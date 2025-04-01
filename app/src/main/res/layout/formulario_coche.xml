@@ -1,6 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<android.widget.ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_background"
+        android:padding="16dp">
+
+        <!-- Botón de regreso -->
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:contentDescription="@string/volver"
+            android:focusable="true"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Imagen de encabezado -->
+        <ImageView
+            android:id="@+id/header_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="40dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Título del formulario -->
+        <TextView
+            android:id="@+id/tv_welcome_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pon tu coche a la venta"
+            android:layout_marginTop="16dp"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-black"
+            app:layout_constraintTop_toBottomOf="@id/header_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Contenedor de campos -->
+        <LinearLayout
+            android:id="@+id/form_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_welcome_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!-- Botón para seleccionar imagen -->
+            <Button
+                android:id="@+id/button_select_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="@string/seleccionar_imagen"
+                android:textSize="18sp"
+                android:background="@drawable/edittext_rounded_border"/>
+
+            <!-- Vista previa de la imagen -->
+            <ImageView
+                android:id="@+id/preview_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="12dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/edittext_rounded_border"
+                android:visibility="gone" />
+
+            <!-- Campos del formulario -->
+            <EditText
+                android:id="@+id/brand_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_rounded_border"
+                android:hint="@string/marca_del_coche"
+                android:drawableStart="@drawable/baseline_directions_car_24"
+                android:drawablePadding="12dp"
+                android:padding="18dp"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/model_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edittext_rounded_border"
+                android:hint="@string/modelo_del_coche"
+                android:drawableStart="@drawable/baseline_directions_car_24"
+                android:drawablePadding="12dp"
+                android:padding="18dp"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/year_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edittext_rounded_border"
+                android:drawableStart="@drawable/baseline_calendar_month_24"
+                android:drawablePadding="12dp"
+                android:padding="18dp"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/mileage_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edittext_rounded_border"
+                android:hint="@string/kilometraje"
+                android:inputType="number"
+                android:drawableStart="@drawable/baseline_speed_24"
+                android:drawablePadding="12dp"
+                android:padding="18dp"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/price_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edittext_rounded_border"
+                android:hint="@string/precio"
+                android:drawableStart="@drawable/baseline_euro_symbol_24"
+                android:inputType="numberDecimal"
+                android:drawablePadding="12dp"
+                android:padding="18dp"
+                android:textSize="20sp"/>  <!-- 🔥 Permite decimales -->
+
+
+
+            <EditText
+                android:id="@+id/description_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="88dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edittext_rounded_border"
+                android:hint="@string/descripci_n_del_coche_estado_defectos_etc"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:padding="18dp"
+                android:textSize="20sp" />
+
+            <!-- Botón para registrar el coche -->
+            <Button
+                android:id="@+id/button_register_car"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/button_rounded_corner"
+                android:padding="18dp"
+                android:text="@string/subir_coche"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</android.widget.ScrollView>

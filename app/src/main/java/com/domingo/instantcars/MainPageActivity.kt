@@ -1,6 +1,10 @@
 package com.domingo.instantcars
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,9 +50,20 @@ class MainPageActivity : AppCompatActivity() {
             }
         })
 
-        // Botón flotante para agregar un coche (aquí puedes redirigir a otra actividad)
+        // Botón flotante para agregar un coche
         fabAdd.setOnClickListener {
-            // TODO: Redirigir a la actividad de agregar coche
+            val intent = Intent(this, FormCocheActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun convertirBase64ABitmap(base64String: String): Bitmap? {
+        return try {
+            val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
+            BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+            null
         }
     }
 
@@ -63,7 +78,8 @@ class MainPageActivity : AppCompatActivity() {
                         marca = document.getString("marca") ?: "",
                         modelo = document.getString("modelo") ?: "",
                         anio = document.getString("anio") ?: "",
-                        precio = document.getDouble("precio") ?: 0.0,
+                        precio = document.getString("precio") ?: "",
+                        km = document.getString("kilometraje") ?: "",
                         imagen = document.getString("imagen") ?: "",
                         subidoPor = document.getString("subidoPor") ?: "",
                         descripcion = document.getString("descripcion") ?: ""
@@ -76,6 +92,7 @@ class MainPageActivity : AppCompatActivity() {
                 // Manejo de error
             }
     }
+
     private fun filtrarCoches(query: String?) {
         val listaFiltrada = listaCoches.filter {
             it.marca.contains(query ?: "", ignoreCase = true) ||
