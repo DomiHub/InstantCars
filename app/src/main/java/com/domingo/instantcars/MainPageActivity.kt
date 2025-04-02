@@ -20,6 +20,11 @@ class MainPageActivity : AppCompatActivity() {
     private lateinit var searchView: SearchView
     private lateinit var fabAdd: FloatingActionButton
 
+    override fun onResume() {
+        super.onResume()
+        cargarCochesDesdeFirebase() // Recarga la lista de coches al volver a esta pantalla
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_page)

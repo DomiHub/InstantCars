@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import android.graphics.BitmapFactory
-import java.util.concurrent.Executors
 import android.util.Base64
 import android.graphics.Bitmap
 
@@ -55,7 +54,7 @@ class CocheAdapter(private val listaCoches: List<Coche>) :
         }
     }
 
-    //Función para cargar imagen manualmente desde URL (Firebase Storage)
+    /*Función para cargar imagen manualmente desde URL (Firebase Storage)
     private fun cargarImagenDesdeFirebase(urlImagen: String, imageView: ImageView) {
         val executor = Executors.newSingleThreadExecutor()
         executor.execute {
@@ -75,5 +74,5 @@ class CocheAdapter(private val listaCoches: List<Coche>) :
                 }
             }
         }
-    }
+    }*/
 }

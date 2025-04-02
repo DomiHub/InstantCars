@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class PortalActivity : AppCompatActivity() {
-/*
+
     private fun ComprobarSesion() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
@@ -18,12 +18,12 @@ class PortalActivity : AppCompatActivity() {
             finish()
         }
     }
-*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_page)
 
-        //ComprobarSesion()
+        ComprobarSesion()
 
         //Evento para ir a la pagina de registro
         val button_GoTo_create_account = findViewById<Button>(R.id.button_GoTo_create_account)
