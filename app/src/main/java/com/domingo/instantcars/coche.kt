@@ -6,7 +6,8 @@ data class Coche(
     val anio: String = "",
     val precio: String = "",
     val km: String = "",
-    val imagen: String = "", // URL de la imagen en Firebase Storage
+    val imagen: String = "",
     val subidoPor: String = "", // UID del usuario que lo ha subido
-    val descripcion: String = ""
+    val descripcion: String = "",
+    val ubicacion: String = ""
 )

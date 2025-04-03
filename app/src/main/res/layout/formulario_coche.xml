@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/login_background"
-        android:padding="16dp">
+        android:paddingTop="16dp">
 
         <!-- Botón de regreso -->
         <ImageButton
@@ -31,27 +31,14 @@
         <!-- Imagen de encabezado -->
         <ImageView
             android:id="@+id/header_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="217dp"
+            android:layout_height="217dp"
             android:layout_marginTop="40dp"
             android:scaleType="fitCenter"
-            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/subir_coches"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Título del formulario -->
-        <TextView
-            android:id="@+id/tv_welcome_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pon tu coche a la venta"
-            android:layout_marginTop="16dp"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-black"
-            app:layout_constraintTop_toBottomOf="@id/header_image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Contenedor de campos -->
         <LinearLayout
@@ -60,7 +47,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_welcome_title"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/header_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -114,7 +102,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/edittext_rounded_border"
-                android:drawableStart="@drawable/baseline_calendar_month_24"
+                android:drawablePadding="12dp"
+                android:padding="18dp"
+                android:textSize="20sp"/>
+
+            <Spinner
+                android:id="@+id/ubi_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edittext_rounded_border"
                 android:drawablePadding="12dp"
                 android:padding="18dp"
                 android:textSize="20sp"/>

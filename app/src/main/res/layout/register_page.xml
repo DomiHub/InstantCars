@@ -17,17 +17,16 @@
 
 
         <ImageView
-            android:layout_width="133dp"
-            android:layout_height="132dp"
+            android:layout_width="217dp"
+            android:layout_height="217dp"
             android:layout_marginTop="24dp"
-            android:src="@drawable/anadir" />
+            android:src="@drawable/bienvenidaapp_sinfondo" />
 
         <TextView
             android:id="@+id/tv_welcome_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/registrate"
-            android:layout_marginTop="32dp"
             android:layout_gravity="center"
             android:textSize="32sp"
             android:textColor="@color/black"

@@ -28,6 +28,7 @@ class FormCocheActivity : AppCompatActivity() {
     private lateinit var priceEditText: EditText
     private lateinit var descriptionEditText: EditText
     private lateinit var selectImageButton: Button
+    private lateinit var ubispinner: Spinner
     private lateinit var previewImageView: ImageView
     private lateinit var registerCarButton: Button
 
@@ -60,21 +61,43 @@ class FormCocheActivity : AppCompatActivity() {
         selectImageButton = findViewById(R.id.button_select_image)
         previewImageView = findViewById(R.id.preview_image)
         registerCarButton = findViewById(R.id.button_register_car)
+        ubispinner = findViewById(R.id.ubi_spinner)
 
         // Llenar el Spinner con los años en orden descendente
         val currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
         val years = (2000..currentYear).map { it.toString() }.reversed() // Orden descendente
 
-        // Agregar un "placeholder" en la primera posición
+        // Agregar un "placeholder" en la primera posición para que salga en el Spinner
         val yearsWithPlaceholder = mutableListOf("Año del vehículo") + years
 
-        // Adaptador para el Spinner
+        // Adaptador para el Spinner de año
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, yearsWithPlaceholder)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         yearSpinner.adapter = adapter
 
         // Establecer el valor predeterminado en "Año del vehículo"
         yearSpinner.setSelection(0)
+
+        // Lista de provincias de España
+        val provincias = listOf(
+            "Seleccione una provincia", "A Coruña", "Álava", "Albacete", "Alicante", "Almería",
+            "Asturias", "Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Cantabria",
+            "Castellón", "Ceuta", "Ciudad Real", "Córdoba", "Cuenca", "Girona", "Granada",
+            "Guadalajara", "Guipúzcoa", "Huelva", "Huesca", "Islas Baleares", "Jaén", "La Rioja",
+            "Las Palmas", "León", "Lleida", "Lugo", "Madrid", "Málaga", "Melilla", "Murcia",
+            "Navarra", "Ourense", "Palencia", "Pontevedra", "Salamanca", "Santa Cruz de Tenerife",
+            "Segovia", "Sevilla", "Soria", "Tarragona", "Teruel", "Toledo", "Valencia",
+            "Valladolid", "Vizcaya", "Zamora", "Zaragoza"
+        )
+
+        // Adaptador para el Spinner de ubicación
+        val ubicacionAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, provincias)
+        ubicacionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        ubispinner.adapter = ubicacionAdapter
+
+        // Establecer el valor predeterminado en "Seleccione una provincia"
+        ubispinner.setSelection(0)
+
 
         // Evento para seleccionar imagen
         selectImageButton.setOnClickListener {
@@ -94,14 +117,14 @@ class FormCocheActivity : AppCompatActivity() {
     }
 
 
-      //Abre la galería para seleccionar una imagen.
+    //Abre la galería para seleccionar una imagen.
 
     private fun seleccionarImagenDesdeGaleria() {
         selectImageLauncher.launch("image/*")
     }
 
 
-     //Convierte un Bitmap a una cadena en formato Base64.
+    //Convierte un Bitmap a una cadena en formato Base64.
 
     private fun convertirImagenABase64(bitmap: Bitmap): String {
         val outputStream = ByteArrayOutputStream()
@@ -117,21 +140,19 @@ class FormCocheActivity : AppCompatActivity() {
         val marca = brandEditText.text.toString().trim()
         val modelo = modelEditText.text.toString().trim()
         val year = yearSpinner.selectedItem?.toString() ?: ""
-        if (year == "Año del vehículo") {
-            Toast.makeText(this, "Por favor, seleccione un año válido", Toast.LENGTH_SHORT).show()
-            return
-        }
         val kilometraje = mileageEditText.text.toString().trim()
         val precio = priceEditText.text.toString().trim()
         val descripcion = descriptionEditText.text.toString().trim()
+        val ubicacion = ubispinner.selectedItem?.toString() ?: ""
+
 
         // Validar que todos los campos estén llenos
-        if (marca.isEmpty() || modelo.isEmpty() || kilometraje.isEmpty() || precio.isEmpty() || descripcion.isEmpty() || selectedImageBitmap == null || year.isEmpty()) {
+        if (marca.isEmpty() || modelo.isEmpty() || kilometraje.isEmpty() || precio.isEmpty() || descripcion.isEmpty() || selectedImageBitmap == null || year == "Año del vehículo" || ubicacion == "Seleccione su provincia") {
             Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Convertir imagen a Base64 (si se seleccionó una)
+        // Convertir imagen a Base64
         val imagenBase64 = selectedImageBitmap?.let { convertirImagenABase64(it) } ?: ""
 
         // Obtener el ID del usuario actual
@@ -156,7 +177,8 @@ class FormCocheActivity : AppCompatActivity() {
                         "precio" to precio,
                         "descripcion" to descripcion,
                         "imagen" to imagenBase64,
-                        "subidoPor" to username
+                        "subidoPor" to username,
+                        "ubicacion" to ubicacion
                     )
 
                     // Subir los datos a Firestore

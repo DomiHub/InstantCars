@@ -87,7 +87,8 @@ class MainPageActivity : AppCompatActivity() {
                         km = document.getString("kilometraje") ?: "",
                         imagen = document.getString("imagen") ?: "",
                         subidoPor = document.getString("subidoPor") ?: "",
-                        descripcion = document.getString("descripcion") ?: ""
+                        descripcion = document.getString("descripcion") ?: "",
+                        ubicacion = document.getString("ubicacion") ?: ""
                     )
                     listaCoches.add(coche)
                 }
@@ -101,7 +102,8 @@ class MainPageActivity : AppCompatActivity() {
     private fun filtrarCoches(query: String?) {
         val listaFiltrada = listaCoches.filter {
             it.marca.contains(query ?: "", ignoreCase = true) ||
-                    it.modelo.contains(query ?: "", ignoreCase = true)
+                    it.modelo.contains(query ?: "", ignoreCase = true) ||
+                    it.ubicacion.contains(query ?: "", ignoreCase = true)
         }
         cocheAdapter = CocheAdapter(listaFiltrada)
         recyclerView.adapter = cocheAdapter
