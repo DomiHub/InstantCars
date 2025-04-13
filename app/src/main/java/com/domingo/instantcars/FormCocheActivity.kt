@@ -177,10 +177,10 @@ class FormCocheActivity : AppCompatActivity() {
                         "precio" to precio,
                         "descripcion" to descripcion,
                         "imagen" to imagenBase64,
-                        "subidoPor" to username,
+                        "subidoPor" to userId,  // Siempre UID para que las reglas de seguridad funcionen
+                        "subidoPorNombre" to username, // Nombre para mostrar
                         "ubicacion" to ubicacion
                     )
-
                     // Subir los datos a Firestore
                     db.collection("coches")
                         .add(coche)

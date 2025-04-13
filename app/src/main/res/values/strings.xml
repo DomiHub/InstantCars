@@ -30,4 +30,9 @@
     <string name="descripci_n_del_coche_estado_defectos_etc">Descripción del coche, estado, defectos, etc.</string>
     <string name="kilometraje">Kilometraje</string>
     <string name="volver">Volver</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="Ubicación">Ubicación\n</string>
+    <string name="subidas">Subidas</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="cerrar_sesi_n">Cerrar Sesión</string>
 </resources>

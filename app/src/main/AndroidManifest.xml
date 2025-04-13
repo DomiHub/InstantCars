@@ -44,6 +44,8 @@
 
         <!-- Actividad del formulario del coche -->
         <activity android:name=".FormCocheActivity" />
+        <!-- Actividad del perfil del usuario -->
+        <activity android:name=".ProfileActivity" />
 
     </application>
 

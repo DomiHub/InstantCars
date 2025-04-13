@@ -8,6 +8,7 @@ data class Coche(
     val km: String = "",
     val imagen: String = "",
     val subidoPor: String = "", // UID del usuario que lo ha subido
+    val subidoPorNombre: String = "", // Nombre del usuario que lo ha subido
     val descripcion: String = "",
     val ubicacion: String = ""
 )
