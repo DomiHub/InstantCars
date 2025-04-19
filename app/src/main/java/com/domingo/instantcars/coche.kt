@@ -7,8 +7,9 @@ data class Coche(
     val precio: String = "",
     val km: String = "",
     val imagen: String = "",
-    val subidoPor: String = "", // UID del usuario que lo ha subido
-    val subidoPorNombre: String = "", // Nombre del usuario que lo ha subido
+    val subidoPor: String = "",
+    val subidoPorNombre: String = "",
     val descripcion: String = "",
-    val ubicacion: String = ""
+    val ubicacion: String = "",
+    @Transient val id: String? = null  // El id del documento en Firestore (no se sube a Firestore)
 )

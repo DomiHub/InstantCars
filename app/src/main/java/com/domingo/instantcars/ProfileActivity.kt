@@ -8,6 +8,7 @@ import android.util.Base64
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,12 +20,15 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
 
     private lateinit var backButton: ImageView
+    private lateinit var cardViewUpload: CardView
+    private lateinit var cardViewFav: CardView
     private lateinit var fullname: TextView
     private lateinit var email_input: TextView
     private lateinit var imageView: ImageView
     private lateinit var usernameInput: TextInputEditText
     private lateinit var updateButton: Button
     private lateinit var logoutButton: Button
+    private lateinit var favLabel: TextView
 
     private var imageBase64: String? = null
 
@@ -37,25 +41,37 @@ class ProfileActivity : AppCompatActivity() {
 
         // Inicialización de las vistas
         backButton = findViewById(R.id.volver_button)
+        cardViewUpload = findViewById(R.id.cardViewUpload)
+        cardViewFav = findViewById(R.id.cardViewFav)
         fullname = findViewById(R.id.full_name)
         email_input = findViewById(R.id.email_input)
         imageView = findViewById(R.id.profile_image)
         usernameInput = findViewById(R.id.username_input)
         updateButton = findViewById(R.id.update_button)
         logoutButton = findViewById(R.id.logout_button)
+        favLabel = findViewById(R.id.fav_label)
 
         cargarDatosUsuario()
+        contarFavoritos()
 
         imageView.setOnClickListener {
             seleccionarImagenDesdeGaleria()
         }
+
         backButton.setOnClickListener {
             val intent = Intent(this, MainPageActivity::class.java)
             startActivity(intent)
         }
+
+        cardViewFav.setOnClickListener {
+            val intent = Intent(this, FavoritosActivity::class.java)
+            startActivity(intent)
+        }
+
         updateButton.setOnClickListener {
             actualizarDatosUsuario()
         }
+
         logoutButton.setOnClickListener {
             auth.signOut()
             val intent = Intent(this, PortalActivity::class.java)
@@ -70,12 +86,10 @@ class ProfileActivity : AppCompatActivity() {
 
         db.collection("users").document(uid).get().addOnSuccessListener { document ->
             if (document != null && document.exists()) {
-                // Mostrar el nombre de usuario y correo
                 fullname.text = document.getString("username")
                 usernameInput.setText(document.getString("username"))
-                email_input.text = auth.currentUser?.email  // Mostrar el correo electrónico
+                email_input.text = auth.currentUser?.email
 
-                // Cargar la imagen de perfil
                 val base64 = document.getString("profile_image")
                 base64?.let {
                     val imageBytes = Base64.decode(it.substringAfter(","), Base64.DEFAULT)
@@ -90,16 +104,14 @@ class ProfileActivity : AppCompatActivity() {
         val uid = auth.currentUser?.uid ?: return
         val nuevoUsername = usernameInput.text.toString().trim()
 
-        updateButton.isEnabled = false  // Desactivar botón
+        updateButton.isEnabled = false
 
-        // Validar campos obligatorios
         if (nuevoUsername.isEmpty()) {
             Toast.makeText(this, "El nombre de usuario no puede estar vacío", Toast.LENGTH_SHORT).show()
             updateButton.isEnabled = true
             return
         }
 
-        // Verificar si el nombre de usuario ya está en uso por otro
         db.collection("users").whereEqualTo("username", nuevoUsername).get()
             .addOnSuccessListener { usernameResult ->
                 val usernameOcupadoPorOtro = usernameResult.any { it.id != uid }
@@ -108,22 +120,14 @@ class ProfileActivity : AppCompatActivity() {
                     Toast.makeText(this, "Este nombre de usuario ya está en uso", Toast.LENGTH_SHORT).show()
                     updateButton.isEnabled = true
                 } else {
-                    // Si los campos son válidos, actualizar en Firebase
                     val updates = mutableMapOf<String, Any>()
                     updates["username"] = nuevoUsername
+                    imageBase64?.let { updates["profile_image"] = it }
 
-                    imageBase64?.let {
-                        updates["profile_image"] = it
-                    }
-
-                    // Actualizar en Firestore
                     db.collection("users").document(uid).update(updates)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Perfil actualizado", Toast.LENGTH_SHORT).show()
-
-                            // Recargar los datos del usuario para reflejar los cambios inmediatamente
                             cargarDatosUsuario()
-
                         }
                         .addOnFailureListener {
                             Toast.makeText(this, "Error al actualizar el perfil", Toast.LENGTH_SHORT).show()
@@ -139,12 +143,10 @@ class ProfileActivity : AppCompatActivity() {
 
     private val launcher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
-            // Maneja la URI de la imagen seleccionada aquí
             val inputStream = contentResolver.openInputStream(it)
             val bitmap = BitmapFactory.decodeStream(inputStream)
             imageView.setImageBitmap(bitmap)
 
-            // Convertir la imagen seleccionada a Base64
             val outputStream = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             val imageBytes = outputStream.toByteArray()
@@ -154,7 +156,26 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun seleccionarImagenDesdeGaleria() {
-        // Llamamos para seleccionar una imagen
-        launcher.launch("image/*")  // Tipo de archivo
+        launcher.launch("image/*")
+    }
+
+    private fun contarFavoritos() {
+        val userId = auth.currentUser?.uid ?: return
+
+        db.collection("favoritos")
+            .whereEqualTo("subidoPor", userId)
+            .get()
+            .addOnSuccessListener { documentos ->
+                val totalFavoritos = documentos.size()
+                favLabel.text = totalFavoritos.toString()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error al contar favoritos: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        contarFavoritos()  // Actualiza el contador al volver de FavoritosActivity
     }
 }

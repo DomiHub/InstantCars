@@ -39,7 +39,7 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profile_image"
         android:layout_width="60dp"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:adjustViewBounds="true"
         android:clickable="true"
         android:focusable="true"

@@ -1,45 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="4dp">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imgCoche"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/RoundedImage" />
-
-
-        <TextView
-            android:id="@+id/txtMarca"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/marca"
-            android:textStyle="bold"/>
+            android:orientation="vertical"
+            android:padding="8dp">
 
-        <TextView
-            android:id="@+id/txtModelo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/modelo"/>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgCoche"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/RoundedImage" />
 
-        <TextView
-            android:id="@+id/txtPrecio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/precio"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/txtMarca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/marca"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtModelo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/modelo" />
+
+            <TextView
+                android:id="@+id/txtPrecio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/precio" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnFavorito"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/coche_favorito"
+            android:src="@drawable/outline_favorite_24" />
+    </FrameLayout>
 
 </androidx.cardview.widget.CardView>
-

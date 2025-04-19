@@ -46,6 +46,8 @@
         <activity android:name=".FormCocheActivity" />
         <!-- Actividad del perfil del usuario -->
         <activity android:name=".ProfileActivity" />
+        <!-- Actividad de favoritos -->
+        <activity android:name=".FavoritosActivity" />
 
     </application>
 

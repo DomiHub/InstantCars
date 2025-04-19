@@ -12,112 +12,46 @@
         android:layout_marginTop="24dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="44dp">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/volver_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/volver"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"/>
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="4dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:background="#ffc6c6" />
+
+            <!-- RecyclerView para mostrar favoritos -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewFavoritos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="44dp">
+                android:clipToPadding="false"
+                android:paddingBottom="16dp"
+                android:scrollbars="vertical" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/favoritos"
-                    android:textColor="@color/black"
-                    android:textSize="32sp" />
+        </LinearLayout>
 
-                <View
-                    android:layout_width="100dp"
-                    android:layout_height="4dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="24dp"
-                    android:background="#ffc6c6" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:weightSum="100">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:id="@+id/imgCoche"
-                                android:layout_width="match_parent"
-                                android:layout_height="150dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/coche" />
-
-                            <TextView
-                                android:id="@+id/txtMarca"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/marca"
-                                android:textStyle="bold"
-                                android:textSize="20sp"
-                                android:layout_marginTop="8dp"/>
-
-                            <TextView
-                                android:id="@+id/txtModelo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/modelo"
-                                android:textSize="16sp"
-                                android:layout_marginTop="4dp"/>
-
-                            <TextView
-                                android:id="@+id/txtPrecio"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/precio"
-                                android:textSize="16sp"
-                                android:layout_marginTop="4dp"/>
-
-                            <TextView
-                                android:id="@+id/txtUbi"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/Ubicación"
-                                android:textSize="16sp"
-                                android:layout_marginTop="4dp"/>
-
-                            <!-- Botón para quitar de favoritos (Ícono de corazón) -->
-                            <ImageButton
-                                android:id="@+id/btnFavorito"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:layout_marginTop="8dp"
-                                android:src="@drawable/outline_favorite_24"
-                                android:background="?android:attr/selectableItemBackground"
-                                android:padding="8dp"/>
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-        </ScrollView>
     </RelativeLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
