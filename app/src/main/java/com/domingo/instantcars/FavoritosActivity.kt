@@ -15,15 +15,15 @@ class FavoritosActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var favoritosAdapter: FavoritosAdapter
     private val listaFavoritos = mutableListOf<Coche>()
-    private lateinit var volver_button: ImageView
+    private lateinit var volverButton: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.like_page)
 
-        volver_button = findViewById(R.id.volver_button)
-        volver_button.setOnClickListener {
+        volverButton = findViewById(R.id.volver_button)
+        volverButton.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }

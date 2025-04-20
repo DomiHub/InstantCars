@@ -3,110 +3,146 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="360dp">
+
                 <ImageView
+                    android:id="@+id/imageViewCoche"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/coche"
-                    android:scaleType="centerCrop"/>
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/imagen_del_coche"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/coche" />
+
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_arrow_back_24"
+                    android:id="@+id/back_button"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="16dp"
-                    android:padding="8dp"/>
+                    android:layout_marginTop="35dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/volver"
+                    android:focusable="true"
+                    android:padding="8dp"
+                    android:src="@drawable/baseline_arrow_back_24" />
+
                 <ImageView
+                    android:id="@+id/imageViewFavorite"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@drawable/outline_favorite_24"
-                    android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="16dp"/>
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="16dp"
+                    android:contentDescription="@string/favoritos"
+                    android:src="@drawable/outline_favorite_24" />
+
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
-                android:weightSum="100"
-                android:padding="16dp">
+                android:padding="16dp"
+                android:weightSum="100">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <TextView
+                            android:id="@+id/textViewTituloCoche"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
-                            android:text="Coche"
-                            android:textSize="24sp"
-                            android:textColor="#000000"/>
+                            android:text="@string/coche"
+                            android:textColor="#000000"
+                            android:textSize="24sp" />
+
                         <TextView
+                            android:id="@+id/textViewPrecioCoche"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="€4000"
-                            android:textSize="16sp"
+                            android:text="@string/_4000"
                             android:textColor="#8e8ef6"
-                            android:textStyle="bold"/>
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
                     </LinearLayout>
+
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="50">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:orientation="vertical">
+
                         <TextView
+                            android:id="@+id/textViewNombreUsuario"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginBottom="4dp"
-                            android:text="Nombre Usuario"
-                            android:textSize="16sp"/>
+                            android:text="@string/nombre_usuario"
+                            android:textSize="16sp" />
 
                     </LinearLayout>
+
                 </LinearLayout>
+
             </LinearLayout>
+
             <View
                 android:layout_width="200dp"
                 android:layout_height="4dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="18dp"
                 android:layout_marginBottom="18dp"
-                android:background="#dedede"/>
+                android:background="#dedede" />
+
             <TextView
+                android:id="@+id/textViewDescripcion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Coche muy bueno la verdad, muy bien cuidado, no te dara muchos problemas."
                 android:padding="16dp"
-                android:fontFamily=""
+                android:text="@string/descripcion_del_coche"
                 android:textColor="#444444"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
+
             <Button
+                android:id="@+id/buttonNegociar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_margin="16dp"
-                android:text="Empieza a negociar"
+                android:gravity="center"
+                android:text="@string/empieza_a_negociar"
                 android:textAllCaps="false"
-                android:textSize="20dp"/>
+                android:textSize="20sp" />
+
         </LinearLayout>
     </ScrollView>
 

@@ -38,4 +38,15 @@
     <string name="imagen_de_coche">Imagen de coche</string>
     <string name="cochefav">cocheFav</string>
     <string name="coche_favorito">Coche favorito</string>
+    <string name="empieza_a_negociar">Empieza a negociar</string>
+    <string name="imagen_del_coche">Imagen del coche</string>
+    <string name="descripcion_del_coche">Descripcion del coche</string>
+    <string name="nombre_usuario">Nombre Usuario</string>
+    <string name="coche">Coche</string>
+    <string name="_4000">€4000</string>
+    <string name="precio_formato">Precio: €%s</string>
+    <string name="titulo_coche">%1$s %2$s</string>
+    <string name="precio_coche">€%1$s</string>
+    <string name="MarcaModelo">%1$s %2$s</string>
+    <string name="PrecioCoche">€%1$s</string>
 </resources>

@@ -23,7 +23,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var cardViewUpload: CardView
     private lateinit var cardViewFav: CardView
     private lateinit var fullname: TextView
-    private lateinit var email_input: TextView
+    private lateinit var emailInput: TextView
     private lateinit var imageView: ImageView
     private lateinit var usernameInput: TextInputEditText
     private lateinit var updateButton: Button
@@ -44,7 +44,7 @@ class ProfileActivity : AppCompatActivity() {
         cardViewUpload = findViewById(R.id.cardViewUpload)
         cardViewFav = findViewById(R.id.cardViewFav)
         fullname = findViewById(R.id.full_name)
-        email_input = findViewById(R.id.email_input)
+        emailInput = findViewById(R.id.email_input)
         imageView = findViewById(R.id.profile_image)
         usernameInput = findViewById(R.id.username_input)
         updateButton = findViewById(R.id.update_button)
@@ -88,7 +88,7 @@ class ProfileActivity : AppCompatActivity() {
             if (document != null && document.exists()) {
                 fullname.text = document.getString("username")
                 usernameInput.setText(document.getString("username"))
-                email_input.text = auth.currentUser?.email
+                emailInput.text = auth.currentUser?.email
 
                 val base64 = document.getString("profile_image")
                 base64?.let {
@@ -167,7 +167,7 @@ class ProfileActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { documentos ->
                 val totalFavoritos = documentos.size()
-                favLabel.text = totalFavoritos.toString()
+                favLabel.text = String.format(totalFavoritos.toString())
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error al contar favoritos: ${e.message}", Toast.LENGTH_SHORT).show()

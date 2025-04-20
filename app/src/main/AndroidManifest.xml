@@ -48,6 +48,8 @@
         <activity android:name=".ProfileActivity" />
         <!-- Actividad de favoritos -->
         <activity android:name=".FavoritosActivity" />
+        <!-- Actividad de detalles del coche -->
+        <activity android:name=".DetallesCocheActivity" />
 
     </application>
 
