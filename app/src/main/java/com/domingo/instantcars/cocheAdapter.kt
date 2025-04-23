@@ -1,5 +1,6 @@
 package com.domingo.instantcars
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -28,6 +29,7 @@ class CocheAdapter(private val listaCoches: List<Coche>) :
         val txtMarca: TextView = itemView.findViewById(R.id.txtMarca)
         val txtModelo: TextView = itemView.findViewById(R.id.txtModelo)
         val txtPrecio: TextView = itemView.findViewById(R.id.txtPrecio)
+        val txtUbi: TextView = itemView.findViewById(R.id.txtUbi)
         val btnFavorito: ImageButton = itemView.findViewById(R.id.btnFavorito)
         val cardCoche: View =
             itemView.findViewById(R.id.cardCoche) // La CardView que se va a hacer clickeable
@@ -43,13 +45,15 @@ class CocheAdapter(private val listaCoches: List<Coche>) :
         return CocheViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CocheViewHolder, position: Int) {
         val coche = listaCoches[position]
 
         // Asignar datos a las vistas
         holder.txtMarca.text = coche.marca
         holder.txtModelo.text = coche.modelo
-        holder.txtPrecio.text = "Precio: €${coche.precio}"
+        holder.txtPrecio.text = coche.precio + "€"
+        holder.txtUbi.text = coche.ubicacion
 
         // Convertir Base64 a Bitmap para la imagen
         val bitmap = convertirBase64ABitmap(coche.imagen)

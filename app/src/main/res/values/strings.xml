@@ -49,4 +49,8 @@
     <string name="precio_coche">€%1$s</string>
     <string name="MarcaModelo">%1$s %2$s</string>
     <string name="PrecioCoche">€%1$s</string>
+    <string name="ubicacion">Ubicación</string>
+    <string name="precio_format">%1$s€</string>
+    <string name="kilometrajeKm">%1$s Km</string>
+
 </resources>
