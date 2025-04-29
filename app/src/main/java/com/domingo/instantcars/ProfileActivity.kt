@@ -29,6 +29,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var updateButton: Button
     private lateinit var logoutButton: Button
     private lateinit var favLabel: TextView
+    private lateinit var uploadLabel: TextView
 
     private var imageBase64: String? = null
 
@@ -50,49 +51,55 @@ class ProfileActivity : AppCompatActivity() {
         updateButton = findViewById(R.id.update_button)
         logoutButton = findViewById(R.id.logout_button)
         favLabel = findViewById(R.id.fav_label)
+        uploadLabel = findViewById(R.id.upload_label)
 
         cargarDatosUsuario()
         contarFavoritos()
+        contarSubidas()
 
         imageView.setOnClickListener {
             seleccionarImagenDesdeGaleria()
         }
 
         backButton.setOnClickListener {
-            val intent = Intent(this, MainPageActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MainPageActivity::class.java))
+            finish()
         }
 
         cardViewFav.setOnClickListener {
-            val intent = Intent(this, FavoritosActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, FavoritosActivity::class.java))
+        }
+        cardViewUpload.setOnClickListener {
+            startActivity(Intent(this, MisSubidasActivity::class.java))
         }
 
         updateButton.setOnClickListener {
             actualizarDatosUsuario()
         }
-
         logoutButton.setOnClickListener {
             auth.signOut()
-            val intent = Intent(this, PortalActivity::class.java)
-            Toast.makeText(this, "Has cerrrado sesión", Toast.LENGTH_SHORT).show()
-            startActivity(intent)
+            Toast.makeText(this, "Has cerrado sesión", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, PortalActivity::class.java))
             finish()
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        contarFavoritos() // refresca contador favoritos
+        contarSubidas()   // refresca contador subidas
+    }
+
     private fun cargarDatosUsuario() {
         val uid = auth.currentUser?.uid ?: return
-
         db.collection("users").document(uid).get().addOnSuccessListener { document ->
-            if (document != null && document.exists()) {
+            if (document.exists()) {
                 fullname.text = document.getString("username")
                 usernameInput.setText(document.getString("username"))
                 emailInput.text = auth.currentUser?.email
 
-                val base64 = document.getString("profile_image")
-                base64?.let {
-                    val imageBytes = Base64.decode(it.substringAfter(","), Base64.DEFAULT)
+                document.getString("profile_image")?.let { base64 ->
+                    val imageBytes = Base64.decode(base64.substringAfter(","), Base64.DEFAULT)
                     val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
                     imageView.setImageBitmap(bitmap)
                 }
@@ -100,82 +107,81 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun contarFavoritos() {
+        val userId = auth.currentUser?.uid ?: return
+        db.collection("favoritos")
+            .whereEqualTo("subidoPor", userId)
+            .get()
+            .addOnSuccessListener { docs ->
+                favLabel.text = docs.size().toString()
+            }
+    }
+
+    private fun contarSubidas() {
+        val userId = auth.currentUser?.uid ?: return
+        db.collection("coches")
+            .whereEqualTo("subidoPor", userId)
+            .get()
+            .addOnSuccessListener { docs ->
+                uploadLabel.text = docs.size().toString()
+            }
+    }
+
     private fun actualizarDatosUsuario() {
         val uid = auth.currentUser?.uid ?: return
         val nuevoUsername = usernameInput.text.toString().trim()
-
-        updateButton.isEnabled = false
-
         if (nuevoUsername.isEmpty()) {
-            Toast.makeText(this, "El nombre de usuario no puede estar vacío", Toast.LENGTH_SHORT).show()
-            updateButton.isEnabled = true
+            Toast.makeText(this, "El nombre de usuario no puede estar vacío", Toast.LENGTH_SHORT)
+                .show()
             return
         }
-
+        updateButton.isEnabled = false
         db.collection("users").whereEqualTo("username", nuevoUsername).get()
-            .addOnSuccessListener { usernameResult ->
-                val usernameOcupadoPorOtro = usernameResult.any { it.id != uid }
-
-                if (usernameOcupadoPorOtro) {
-                    Toast.makeText(this, "Este nombre de usuario ya está en uso", Toast.LENGTH_SHORT).show()
-                    updateButton.isEnabled = true
+            .addOnSuccessListener { result ->
+                if (result.any { it.id != uid }) {
+                    Toast.makeText(this, "Nombre de usuario en uso", Toast.LENGTH_SHORT).show()
                 } else {
-                    val updates = mutableMapOf<String, Any>()
-                    updates["username"] = nuevoUsername
+                    val updates = mutableMapOf<String, Any>("username" to nuevoUsername)
                     imageBase64?.let { updates["profile_image"] = it }
-
                     db.collection("users").document(uid).update(updates)
                         .addOnSuccessListener {
-                            Toast.makeText(this, "Perfil actualizado", Toast.LENGTH_SHORT).show()
-                            cargarDatosUsuario()
+                            Toast.makeText(
+                                this,
+                                "Perfil actualizado",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                         .addOnFailureListener {
-                            Toast.makeText(this, "Error al actualizar el perfil", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "Error al actualizar",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    updateButton.isEnabled = true
                 }
+                updateButton.isEnabled = true
             }
             .addOnFailureListener {
-                Toast.makeText(this, "Error al verificar el nombre de usuario", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Error al verificar nombre", Toast.LENGTH_SHORT).show()
                 updateButton.isEnabled = true
             }
     }
 
     private val launcher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
-            val inputStream = contentResolver.openInputStream(it)
-            val bitmap = BitmapFactory.decodeStream(inputStream)
-            imageView.setImageBitmap(bitmap)
-
-            val outputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-            val imageBytes = outputStream.toByteArray()
-            val encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT)
-            imageBase64 = "data:image/jpeg;base64,$encodedImage"
+            contentResolver.openInputStream(it)?.use { stream ->
+                val bitmap = BitmapFactory.decodeStream(stream)
+                imageView.setImageBitmap(bitmap)
+                ByteArrayOutputStream().use { os ->
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
+                    imageBase64 = "data:image/jpeg;base64," + Base64.encodeToString(
+                        os.toByteArray(),
+                        Base64.DEFAULT
+                    )
+                }
+            }
         }
     }
 
-    private fun seleccionarImagenDesdeGaleria() {
-        launcher.launch("image/*")
-    }
-
-    private fun contarFavoritos() {
-        val userId = auth.currentUser?.uid ?: return
-
-        db.collection("favoritos")
-            .whereEqualTo("subidoPor", userId)
-            .get()
-            .addOnSuccessListener { documentos ->
-                val totalFavoritos = documentos.size()
-                favLabel.text = String.format(totalFavoritos.toString())
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Error al contar favoritos: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        contarFavoritos()  // Actualiza el contador al volver de FavoritosActivity
-    }
+    private fun seleccionarImagenDesdeGaleria() = launcher.launch("image/*")
 }

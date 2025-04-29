@@ -50,6 +50,8 @@
         <activity android:name=".FavoritosActivity" />
         <!-- Actividad de detalles del coche -->
         <activity android:name=".DetallesCocheActivity" />
+        <!-- Actividad de mis subidas -->
+        <activity android:name=".MisSubidasActivity" />
 
     </application>
 

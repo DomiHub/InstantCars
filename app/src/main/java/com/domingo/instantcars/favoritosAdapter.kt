@@ -1,5 +1,6 @@
 package com.domingo.instantcars
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.LayoutInflater
@@ -16,7 +17,7 @@ class FavoritosAdapter(
 ) : RecyclerView.Adapter<FavoritosAdapter.FavoritoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritoViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_favorito, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_subida_favorito, parent, false)
         return FavoritoViewHolder(view)
     }
 
@@ -49,11 +50,18 @@ class FavoritosAdapter(
                 imgCoche.setImageResource(R.drawable.coche)  // Imagen por defecto en caso de error
             }
 
-            // Eliminar de favoritos
+            // Clic para eliminar de favoritos
             btnFavorito.setOnClickListener {
                 onEliminarFavorito(coche)
+            }
+
+            // Clic en toda la tarjeta para abrir detalles
+            itemView.setOnClickListener {
+                val context = itemView.context
+                val intent = Intent(context, DetallesCocheActivity::class.java)
+                intent.putExtra("cocheId", coche.id)  // Pasamos el id del coche
+                context.startActivity(intent)
             }
         }
     }
 }
-

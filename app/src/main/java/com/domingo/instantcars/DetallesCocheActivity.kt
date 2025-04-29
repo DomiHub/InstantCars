@@ -87,8 +87,7 @@ class DetallesCocheActivity : AppCompatActivity() {
         // Volver a la página principal
         val backButton = findViewById<ImageView>(R.id.back_button)
         backButton.setOnClickListener {
-            val intent = Intent(this, MainPageActivity::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 

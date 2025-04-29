@@ -56,7 +56,7 @@ class FavoritosActivity : AppCompatActivity() {
                     return@addOnSuccessListener
                 }
 
-                var totalFavoritos = documentos.size()
+                val totalFavoritos = documentos.size()
                 var cochesCargados = 0
 
                 for (doc in documentos) {
