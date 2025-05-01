@@ -5,10 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -23,13 +20,14 @@ class DetallesCocheActivity : AppCompatActivity() {
     private lateinit var textViewDescripcion: TextView
     private lateinit var buttonNegociar: Button
     private lateinit var imageViewFavorite: ImageView
-    private lateinit var profileImage: ImageView  // Para la imagen de perfil del usuario
+    private lateinit var profileImage: ImageView
+
+    private var userIdPropietario: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.car_page)
 
-        // Enlazar vistas
         imageViewCoche = findViewById(R.id.imageViewCoche)
         textViewTituloCoche = findViewById(R.id.textViewTituloCoche)
         textViewPrecioCoche = findViewById(R.id.textViewPrecioCoche)
@@ -39,9 +37,8 @@ class DetallesCocheActivity : AppCompatActivity() {
         textViewDescripcion = findViewById(R.id.textViewDescripcion)
         buttonNegociar = findViewById(R.id.buttonNegociar)
         imageViewFavorite = findViewById(R.id.imageViewFavorite)
-        profileImage = findViewById(R.id.profile_image)  // Inicializar la vista de la imagen de perfil
+        profileImage = findViewById(R.id.profile_image)
 
-        // Recoger ID que viene desde el Adapter
         val cocheId = intent.getStringExtra("cocheId")
 
         if (cocheId != null) {
@@ -52,7 +49,24 @@ class DetallesCocheActivity : AppCompatActivity() {
             finish()
         }
 
-        // Botón de favorito
+        // Volver atrás
+        findViewById<ImageView>(R.id.back_button).setOnClickListener {
+            finish()
+        }
+
+        // Navegar al perfil de otro usuario
+        val irAOtroPerfil = {
+            userIdPropietario?.let {
+                val intent = Intent(this, OtherProfileActivity::class.java)
+                intent.putExtra("userId", it)
+                startActivity(intent)
+            }
+        }
+
+        textViewNombreUsuario.setOnClickListener { irAOtroPerfil() }
+        profileImage.setOnClickListener { irAOtroPerfil() }
+
+        // Botón favorito
         imageViewFavorite.setOnClickListener {
             val userId = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid
             if (userId == null || cocheId == null) return@setOnClickListener
@@ -83,12 +97,6 @@ class DetallesCocheActivity : AppCompatActivity() {
                     Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
-
-        // Volver a la página principal
-        val backButton = findViewById<ImageView>(R.id.back_button)
-        backButton.setOnClickListener {
-            finish()
-        }
     }
 
     private fun cargarDetallesCoche(cocheId: String) {
@@ -106,7 +114,8 @@ class DetallesCocheActivity : AppCompatActivity() {
                     val imagenBase64 = doc.getString("imagen") ?: ""
                     val subidoPorUid = doc.getString("subidoPor") ?: ""
 
-                    // Mostrar detalles del coche
+                    userIdPropietario = subidoPorUid  // <- Guardar UID para el intent
+
                     textViewTituloCoche.text = getString(R.string.MarcaModelo, marca, modelo)
                     textViewPrecioCoche.text = getString(R.string.PrecioCoche, precio)
                     textViewUbi.text = ubicacion
@@ -114,7 +123,6 @@ class DetallesCocheActivity : AppCompatActivity() {
                     textViewNombreUsuario.text = subidoPorNombre
                     textViewDescripcion.text = descripcion
 
-                    // Mostrar imagen del coche
                     val bitmap = convertirBase64ABitmap(imagenBase64)
                     if (bitmap != null) {
                         imageViewCoche.setImageBitmap(bitmap)
@@ -122,15 +130,20 @@ class DetallesCocheActivity : AppCompatActivity() {
                         imageViewCoche.setImageResource(R.drawable.errorimagencoche)
                     }
 
-                    // Cargar imagen de perfil del usuario que subió el coche
+                    // Cargar imagen del usuario
                     if (subidoPorUid.isNotEmpty()) {
                         db.collection("users").document(subidoPorUid).get()
                             .addOnSuccessListener { userDoc ->
                                 val base64 = userDoc.getString("profile_image")
                                 base64?.let {
-                                    val imageBytes = Base64.decode(it.substringAfter(","), Base64.DEFAULT)
-                                    val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                                    profileImage.setImageBitmap(bitmap)
+                                    val imageBytes =
+                                        Base64.decode(it.substringAfter(","), Base64.DEFAULT)
+                                    val bitmap2 = BitmapFactory.decodeByteArray(
+                                        imageBytes,
+                                        0,
+                                        imageBytes.size
+                                    )
+                                    profileImage.setImageBitmap(bitmap2)
                                 }
                             }
                     }
@@ -141,11 +154,11 @@ class DetallesCocheActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Error al cargar datos: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Error al cargar datos: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
                 finish()
             }
     }
-
 
     private fun verificarFavorito(cocheId: String) {
         val userId = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid ?: return

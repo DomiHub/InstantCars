@@ -52,6 +52,8 @@
         <activity android:name=".DetallesCocheActivity" />
         <!-- Actividad de mis subidas -->
         <activity android:name=".MisSubidasActivity" />
+        <!-- Actividad de perfil de otro usuario -->
+        <activity android:name=".OtherProfileActivity" />
 
     </application>
 
