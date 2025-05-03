@@ -52,5 +52,21 @@
     <string name="ubicacion">Ubicación</string>
     <string name="precio_format">%1$s€</string>
     <string name="kilometrajeKm">%1$s Km</string>
+    <string name="chats">Chats</string>
+    <string name="buscar">Buscar</string>
+    <string name="conversaciones">Conversaciones</string>
+    <string name="esto_es_otro_mensaje">Esto es otro mensaje</string>
+    <string name="_8_00">8:00</string>
+    <string name="dia_1">Dia 1</string>
+    <string name="user_icon">User Icon</string>
+    <string name="esto_es_un_mensaje">Esto es un mensaje</string>
+    <string name="junio_1">Junio 1</string>
+    <string name="enviar">Enviar</string>
+    <string name="escribir_mensaje">Escribir Mensaje</string>
+    <string name="escribir_mensajes">Escribir Mensajes</string>
+    <string name="lista_mensajes">Lista Mensajes</string>
+    <string name="imagen_del_usuario">Imagen del usuario</string>
+    <string name="ltimo_mensaje_enviado">Último mensaje enviado...</string>
+    <string name="hora_ultimo_mensaje">Hora ultimo mensaje</string>
 
 </resources>

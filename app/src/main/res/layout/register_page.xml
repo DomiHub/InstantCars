@@ -100,7 +100,7 @@
             android:text="@string/ya_tienes_cuenta_inicia_sesi_n"
             android:layout_marginTop="32dp"
             android:layout_gravity="center"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textColor="@color/black"
             android:textStyle="normal"
             android:fontFamily="sans-serif"

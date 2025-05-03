@@ -114,7 +114,6 @@
                     android:id="@+id/username_input"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:drawableStart="@drawable/baseline_drive_file_rename_outline_24"
                     android:drawablePadding="10dp"
                     android:inputType="textPersonName"
                     android:enabled="false" />

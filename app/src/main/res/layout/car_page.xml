@@ -24,8 +24,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/imagen_del_coche"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/coche" />
+                    android:scaleType="centerCrop"/>
 
                 <ImageView
                     android:id="@+id/back_button"
