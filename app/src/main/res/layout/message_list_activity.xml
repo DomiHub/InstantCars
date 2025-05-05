@@ -13,12 +13,39 @@
         android:fitsSystemWindows="true"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_gchannel"
+        <RelativeLayout
+            android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/Widget.AppCompat.Toolbar"
-            app:popupTheme="@style/Theme.AppCompat.Light" />
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:padding="10dp">
+
+            <!-- Título en el centro -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/nombre_de_usuario"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- Botón de retroceso alineado a la izquierda -->
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/volver"
+                android:src="@drawable/baseline_arrow_back_24"
+                app:tint="@color/white" />
+
+        </RelativeLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Lista de mensajes -->

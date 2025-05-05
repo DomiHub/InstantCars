@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class DetallesCocheActivity : AppCompatActivity() {
@@ -53,6 +54,78 @@ class DetallesCocheActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.back_button).setOnClickListener {
             finish()
         }
+        fun abrirChat(chatId: String, receiverId: String) {
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("chatId", chatId)
+            intent.putExtra("receiverId", receiverId)
+            startActivity(intent)
+        }
+
+        buttonNegociar.setOnClickListener {
+            val senderId = FirebaseAuth.getInstance().currentUser?.uid
+            val receiverId = userIdPropietario // El vendedor
+
+            if (senderId != null && receiverId != null && senderId != receiverId) {
+                val db = FirebaseFirestore.getInstance()
+
+                // Paso 1: Buscar si ya existe un chat entre ambos usuarios
+                db.collection("chats")
+                    .whereEqualTo("user1", senderId)
+                    .whereEqualTo("user2", receiverId)
+                    .get()
+                    .addOnSuccessListener { query1 ->
+                        if (!query1.isEmpty) {
+                            val chatId = query1.documents[0].id
+                            abrirChat(chatId, receiverId)
+                        } else {
+                            // Invertir búsqueda por si están al revés los user1/user2
+                            db.collection("chats")
+                                .whereEqualTo("user1", receiverId)
+                                .whereEqualTo("user2", senderId)
+                                .get()
+                                .addOnSuccessListener { query2 ->
+                                    if (!query2.isEmpty) {
+                                        val chatId = query2.documents[0].id
+                                        abrirChat(chatId, receiverId)
+                                    } else {
+                                        // No existe chat, creamos uno nuevo
+                                        val nuevoChat = hashMapOf(
+                                            "user1" to senderId,
+                                            "user2" to receiverId,
+                                            "userIds" to listOf(senderId, receiverId),
+                                            "lastMessage" to "",
+                                            "timestamp" to com.google.firebase.Timestamp.now()
+                                        )
+
+                                        db.collection("chats")
+                                            .add(nuevoChat)
+                                            .addOnSuccessListener { documentReference ->
+                                                val nuevoChatId = documentReference.id
+                                                abrirChat(nuevoChatId, receiverId)
+                                            }
+                                            .addOnFailureListener { e ->
+                                                Toast.makeText(
+                                                    this,
+                                                    "Error creando chat: ${e.message}",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                    }
+                                }
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(
+                            this,
+                            "Error al buscar chat: ${e.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+            } else {
+                Toast.makeText(this, "No puedes negociar contigo mismo", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
         // Navegar al perfil de otro usuario
         val irAOtroPerfil = {

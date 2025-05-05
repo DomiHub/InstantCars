@@ -162,6 +162,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="@string/empieza_a_negociar"
                 android:textAllCaps="false"
                 android:textSize="20sp" />

@@ -54,6 +54,9 @@
         <activity android:name=".MisSubidasActivity" />
         <!-- Actividad de perfil de otro usuario -->
         <activity android:name=".OtherProfileActivity" />
+        <!-- Actividad de chat -->
+        <activity android:name=".ChatActivity" />
+
 
     </application>
 

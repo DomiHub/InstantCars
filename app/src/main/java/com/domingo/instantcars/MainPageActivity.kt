@@ -19,6 +19,7 @@ class MainPageActivity : AppCompatActivity() {
     private lateinit var cocheAdapter: CocheAdapter
     private var listaCoches = mutableListOf<Coche>()
     private var listaFavoritos = listOf<String>()
+    private lateinit var imageView: ImageView
     private lateinit var searchView: SearchView
     private lateinit var fabAdd: FloatingActionButton
     private lateinit var profileImageView: ImageView
@@ -35,6 +36,7 @@ class MainPageActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerViewCoches)
         searchView = findViewById(R.id.searchView)
+        imageView = findViewById(R.id.imageViewChat)
         fabAdd = findViewById(R.id.fabAdd)
         profileImageView = findViewById(R.id.profile_image)
 
@@ -53,6 +55,10 @@ class MainPageActivity : AppCompatActivity() {
                 return true
             }
         })
+        /*
+        imageView.setOnClickListener {
+            startActivity(Intent(this, ConversacionesActivity::class.java))
+        }*/
 
         fabAdd.setOnClickListener {
             startActivity(Intent(this, FormCocheActivity::class.java))

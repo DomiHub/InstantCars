@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_background"
-    android:paddingTop="35dp"
     android:paddingStart="5dp"
+    android:paddingTop="35dp"
     android:paddingEnd="5dp">
 
     <!-- SearchView -->
@@ -18,22 +17,25 @@
         android:background="@drawable/rounded_corner"
         android:iconifiedByDefault="false"
         android:queryHint="Buscar aquí..."
+        app:layout_constraintEnd_toStartOf="@id/imageViewChat"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/imageView"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Icono de chat -->
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewChat"
+        android:contentDescription="@string/chats"
         android:layout_width="48dp"
         android:layout_height="56dp"
-        android:src="@drawable/charla"
-        app:layout_constraintStart_toEndOf="@id/searchView"
-        app:layout_constraintEnd_toStartOf="@id/profile_image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/searchView"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"/>
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/charla"
+        app:layout_constraintBottom_toBottomOf="@id/searchView"
+        app:layout_constraintEnd_toStartOf="@id/profile_image"
+        app:layout_constraintStart_toEndOf="@id/searchView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Botón de usuario -->
     <com.google.android.material.imageview.ShapeableImageView
@@ -42,14 +44,14 @@
         android:layout_height="50dp"
         android:adjustViewBounds="true"
         android:clickable="true"
+        android:contentDescription="@string/bot_n_para_abrir_men_de_usuario"
         android:focusable="true"
         android:src="@drawable/usuario"
-        android:contentDescription="@string/bot_n_para_abrir_men_de_usuario"
-        app:shapeAppearanceOverlay="@style/CircularShape"
+        app:layout_constraintBottom_toBottomOf="@id/searchView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imageView"
+        app:layout_constraintStart_toEndOf="@id/imageViewChat"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/searchView"/>
+        app:shapeAppearanceOverlay="@style/CircularShape" />
 
     <!-- RecyclerView para mostrar coches -->
 
