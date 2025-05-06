@@ -34,6 +34,9 @@ class ChatActivity : AppCompatActivity() {
         messageBox = findViewById(R.id.edit_gchat_message)
         sendButton = findViewById(R.id.button_gchat_send)
 
+        findViewById<ImageButton>(R.id.back_button).setOnClickListener {
+            finish()
+        }
         chatId = intent.getStringExtra("chatId")
         receiverId = intent.getStringExtra("receiverId")
         senderId = FirebaseAuth.getInstance().currentUser?.uid
@@ -43,8 +46,11 @@ class ChatActivity : AppCompatActivity() {
         recyclerView.adapter = messageAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
+
+
         if (chatId != null && senderId != null) {
             escucharMensajes(chatId!!)
+
 
             sendButton.setOnClickListener {
                 val mensajeTexto = messageBox.text.toString().trim()

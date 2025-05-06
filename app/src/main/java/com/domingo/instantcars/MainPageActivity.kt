@@ -55,10 +55,10 @@ class MainPageActivity : AppCompatActivity() {
                 return true
             }
         })
-        /*
+
         imageView.setOnClickListener {
-            startActivity(Intent(this, ConversacionesActivity::class.java))
-        }*/
+            startActivity(Intent(this, ChatListActivity::class.java))
+        }
 
         fabAdd.setOnClickListener {
             startActivity(Intent(this, FormCocheActivity::class.java))
