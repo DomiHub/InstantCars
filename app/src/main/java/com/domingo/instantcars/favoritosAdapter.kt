@@ -47,7 +47,7 @@ class FavoritosAdapter(
                 val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
                 imgCoche.setImageBitmap(bitmap)
             } catch (e: Exception) {
-                imgCoche.setImageResource(R.drawable.coche)  // Imagen por defecto en caso de error
+                imgCoche.setImageResource(R.drawable.errorimagencoche)  // Imagen por defecto en caso de error
             }
 
             // Clic para eliminar de favoritos

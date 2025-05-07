@@ -17,6 +17,7 @@
         android:background="@drawable/rounded_corner"
         android:iconifiedByDefault="false"
         android:queryHint="Buscar aquí..."
+        android:searchHintIcon="@null"
         app:layout_constraintEnd_toStartOf="@id/imageViewChat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,14 +25,14 @@
     <!-- Icono de chat -->
     <ImageView
         android:id="@+id/imageViewChat"
-        android:contentDescription="@string/chats"
         android:layout_width="48dp"
         android:layout_height="56dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:clickable="true"
+        android:contentDescription="@string/chats"
         android:focusable="true"
-        android:src="@drawable/charla"
+        android:src="@drawable/chats"
         app:layout_constraintBottom_toBottomOf="@id/searchView"
         app:layout_constraintEnd_toStartOf="@id/profile_image"
         app:layout_constraintStart_toEndOf="@id/searchView"
@@ -40,12 +41,13 @@
     <!-- Botón de usuario -->
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profile_image"
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
         android:adjustViewBounds="true"
         android:clickable="true"
-        android:contentDescription="@string/bot_n_para_abrir_men_de_usuario"
         android:focusable="true"
+        android:contentDescription="@string/bot_n_para_abrir_men_de_usuario"
+        android:scaleType="centerCrop"
         android:src="@drawable/usuario"
         app:layout_constraintBottom_toBottomOf="@id/searchView"
         app:layout_constraintEnd_toEndOf="parent"
