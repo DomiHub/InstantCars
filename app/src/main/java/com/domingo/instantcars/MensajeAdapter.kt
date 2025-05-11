@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-
 class MensajeAdapter(
     private val context: Context,
     private val mensajes: List<Mensaje>,
-    private val senderId: String
+    private val senderId: String,
+    private val receiverName: String // mostrar nombre del receptor
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val ITEM_SENT = 1
@@ -39,27 +39,36 @@ class MensajeAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val mensaje = mensajes[position]
 
+        val currentDate = mensaje.timestamp?.let {
+            SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(it)
+        }
+
+        val previousDate = if (position > 0) {
+            mensajes[position - 1].timestamp?.let {
+                SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(it)
+            }
+        } else null
+
+        val showDate = currentDate != previousDate
+
         if (holder is SentViewHolder) {
             holder.messageText.text = mensaje.text
             holder.timestamp.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(
                 mensaje.timestamp ?: java.util.Date()
             )
-            // Opcional: actualizar fecha también si la usas
-            holder.date.text = SimpleDateFormat("dd MMM", Locale.getDefault()).format(
-                mensaje.timestamp ?: java.util.Date()
-            )
+            holder.date.visibility = if (showDate) View.VISIBLE else View.GONE
+            holder.date.text = currentDate
         } else if (holder is ReceivedViewHolder) {
             holder.messageText.text = mensaje.text
             holder.timestamp.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(
                 mensaje.timestamp ?: java.util.Date()
             )
-            holder.date.text = SimpleDateFormat("dd MMM", Locale.getDefault()).format(
-                mensaje.timestamp ?: java.util.Date()
-            )
-            holder.username.text = "Usuario" //Usar el nombre real si lo tienes
-            // holder.profileImage.setImageResource(...) //Para usar imagen
+            holder.date.visibility = if (showDate) View.VISIBLE else View.GONE
+            holder.date.text = currentDate
+            holder.username.text = receiverName
         }
     }
+
 
     inner class SentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val messageText: TextView = itemView.findViewById(R.id.text_gchat_message_me)

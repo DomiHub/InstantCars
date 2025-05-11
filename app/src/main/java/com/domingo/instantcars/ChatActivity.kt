@@ -1,9 +1,13 @@
 package com.domingo.instantcars
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
+import com.google.android.material.imageview.ShapeableImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,50 +41,72 @@ class ChatActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.back_button).setOnClickListener {
             finish()
         }
+
         chatId = intent.getStringExtra("chatId")
         receiverId = intent.getStringExtra("receiverId")
         senderId = FirebaseAuth.getInstance().currentUser?.uid
 
-        messageList = ArrayList()
-        messageAdapter = MensajeAdapter(this, messageList, senderId!!)
-        recyclerView.adapter = messageAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        val nombreTextView = findViewById<TextView>(R.id.user_name)
+        val imagenPerfil = findViewById<ShapeableImageView>(R.id.profile_image)
 
+        // Carga el nombre e imagen del receptor y luego inicia la conversación
+        receiverId?.let { id ->
+            db.collection("users").document(id).get()
+                .addOnSuccessListener { document ->
+                    val receiverName = document.getString("username") ?: "Usuario"
+                    nombreTextView.text = receiverName
 
+                    val encodedImage = document.getString("profile_image")
+                    if (!encodedImage.isNullOrEmpty()) {
+                        try {
+                            val base64Data = encodedImage.substringAfter(",")
+                            val imageBytes = Base64.decode(base64Data, Base64.DEFAULT)
+                            val bitmap =
+                                BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                            imagenPerfil.setImageBitmap(bitmap)
+                        } catch (e: Exception) {
+                            Log.e("ChatActivity", "Error al decodificar imagen: ${e.message}")
+                        }
+                    }
 
-        if (chatId != null && senderId != null) {
-            escucharMensajes(chatId!!)
+                    // Solo cuando ya tenemos el nombre del receptor, inicializamos el adaptador
+                    messageList = ArrayList()
+                    messageAdapter = MensajeAdapter(this, messageList, senderId!!, receiverName)
+                    recyclerView.adapter = messageAdapter
+                    recyclerView.layoutManager = LinearLayoutManager(this)
 
+                    if (chatId != null && senderId != null) {
+                        escucharMensajes(chatId!!)
 
-            sendButton.setOnClickListener {
-                val mensajeTexto = messageBox.text.toString().trim()
-                if (mensajeTexto.isNotEmpty()) {
-                    val mensaje = hashMapOf(
-                        "senderId" to senderId,
-                        "text" to mensajeTexto,
-                        "timestamp" to Timestamp.now()
-                    )
-
-                    // Guarda el mensaje en la subcolección "mensajes"
-                    db.collection("chats").document(chatId!!).collection("mensajes")
-                        .add(mensaje)
-                        .addOnSuccessListener {
-                            // Actualiza el último mensaje del chat
-                            db.collection("chats").document(chatId!!)
-                                .update(
-                                    mapOf(
-                                        "lastMessage" to mensajeTexto,
-                                        "timestamp" to Timestamp.now()
-                                    )
+                        sendButton.setOnClickListener {
+                            val mensajeTexto = messageBox.text.toString().trim()
+                            if (mensajeTexto.isNotEmpty()) {
+                                val mensaje = hashMapOf(
+                                    "senderId" to senderId,
+                                    "text" to mensajeTexto,
+                                    "timestamp" to Timestamp.now()
                                 )
-                        }
-                        .addOnFailureListener {
-                            Log.e("Chat", "Error al enviar mensaje: ${it.message}")
-                        }
 
-                    messageBox.text.clear()
+                                db.collection("chats").document(chatId!!).collection("mensajes")
+                                    .add(mensaje)
+                                    .addOnSuccessListener {
+                                        db.collection("chats").document(chatId!!)
+                                            .update(
+                                                mapOf(
+                                                    "lastMessage" to mensajeTexto,
+                                                    "timestamp" to Timestamp.now()
+                                                )
+                                            )
+                                    }
+                                    .addOnFailureListener {
+                                        Log.e("Chat", "Error al enviar mensaje: ${it.message}")
+                                    }
+
+                                messageBox.text.clear()
+                            }
+                        }
+                    }
                 }
-            }
         }
     }
 

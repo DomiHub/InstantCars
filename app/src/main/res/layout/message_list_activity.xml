@@ -20,17 +20,6 @@
             android:background="@color/black"
             android:padding="10dp">
 
-            <!-- Título en el centro -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="@string/nombre_de_usuario"
-                android:textColor="@color/white"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
             <!-- Botón de retroceso alineado a la izquierda -->
             <ImageButton
                 android:id="@+id/back_button"
@@ -44,7 +33,32 @@
                 android:src="@drawable/baseline_arrow_back_24"
                 app:tint="@color/white" />
 
+            <!-- Imagen de perfil -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profile_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_toEndOf="@id/back_button"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/usuario"
+                app:shapeAppearanceOverlay="@style/CircularShape" />
+
+            <!-- Nombre de usuario -->
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/profile_image"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:text="@string/nombre_de_usuario"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </RelativeLayout>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
