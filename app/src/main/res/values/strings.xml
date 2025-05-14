@@ -66,7 +66,11 @@
     <string name="escribir_mensajes">Escribir Mensajes</string>
     <string name="lista_mensajes">Lista Mensajes</string>
     <string name="imagen_del_usuario">Imagen del usuario</string>
-    <string name="ltimo_mensaje_enviado">Último mensaje enviado...</string>
+    <string name="ltimo_mensaje_enviado">Último mensaje enviado…</string>
     <string name="hora_ultimo_mensaje">Hora ultimo mensaje</string>
+    <string name="calificar_este_usuario">Calificar este usuario</string>
+    <string name="calificar_usuario">Calificar Usuario</string>
+    <string name="_0_calificaciones">(0 calificaciones)</string>
+    <string name="calificaciones">" %.1f (%d calificaciones)"</string>
 
 </resources>

@@ -20,14 +20,14 @@
                 android:id="@+id/volver_button"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/volver"
-                android:src="@drawable/baseline_arrow_back_24"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="10dp"
-                android:padding="10dp"/>
+                android:clickable="true"
+                android:contentDescription="@string/volver"
+                android:focusable="true"
+                android:padding="10dp"
+                android:src="@drawable/baseline_arrow_back_24" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profile_image"
@@ -46,6 +46,32 @@
                 android:layout_toEndOf="@id/profile_image"
                 android:text="@string/Usuario"
                 android:textSize="20sp" />
+
+            <!-- RatingBar justo debajo del nombre -->
+            <RatingBar
+                android:id="@+id/rating_bar_reputation"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/full_name"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@id/profile_image"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="0.5" />
+
+            <TextView
+                android:id="@+id/rating_count_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rating_bar_reputation"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/profile_image"
+                android:text="(0 calificaciones)"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
         </RelativeLayout>
 
         <!-- Card de subidas -->
@@ -81,8 +107,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="0"
-                        android:textSize="20sp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/payment_desc"
@@ -91,8 +117,8 @@
                         android:layout_below="@id/upload_label"
                         android:layout_centerHorizontal="true"
                         android:text="@string/subidas"
-                        android:textSize="20sp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -115,9 +141,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:drawablePadding="10dp"
-                    android:inputType="textPersonName"
-                    android:enabled="false" />
+                    android:enabled="false"
+                    android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_rate_user"
+                android:layout_width="163dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_rounded_corner"
+                android:text="@string/calificar_usuario" />
+
 
         </LinearLayout>
 

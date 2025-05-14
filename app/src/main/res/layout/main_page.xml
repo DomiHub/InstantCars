@@ -80,7 +80,7 @@
         android:layout_marginBottom="16dp"
         android:contentDescription="@string/agregar"
         android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="@android:color/white"
+        app:backgroundTint="@android:color/darker_gray"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
