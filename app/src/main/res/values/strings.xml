@@ -72,5 +72,6 @@
     <string name="calificar_usuario">Calificar Usuario</string>
     <string name="_0_calificaciones">(0 calificaciones)</string>
     <string name="calificaciones">" %.1f (%d calificaciones)"</string>
+    <string name="_0">0</string>
 
 </resources>

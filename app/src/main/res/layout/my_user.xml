@@ -21,14 +21,14 @@
                 android:id="@+id/volver_button"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/volver"
-                android:src="@drawable/baseline_arrow_back_24"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="10dp"
-                android:padding="10dp"/>
+                android:clickable="true"
+                android:contentDescription="@string/volver"
+                android:focusable="true"
+                android:padding="10dp"
+                android:src="@drawable/baseline_arrow_back_24" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profile_image"
@@ -48,6 +48,31 @@
                 android:includeFontPadding="false"
                 android:text="@string/Usuario"
                 android:textSize="20sp" />
+
+            <!-- RatingBar justo debajo del nombre -->
+            <RatingBar
+                android:id="@+id/rating_bar_reputation"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/full_name"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@id/profile_image"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="0.5" />
+
+            <TextView
+                android:id="@+id/rating_count_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rating_bar_reputation"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/profile_image"
+                android:text="@string/_0_calificaciones"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
         </RelativeLayout>
 
@@ -76,8 +101,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/baseline_arrow_circle_up_24">
-                    </ImageView>
+                        android:src="@drawable/baseline_arrow_circle_up_24" />
 
                     <TextView
                         android:id="@+id/upload_label"
@@ -85,22 +109,20 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:fontFamily=""
-                        android:textColor="@color/black"
                         android:includeFontPadding="false"
-                        android:text="0"
-                        android:textSize="20sp">
-                    </TextView>
+                        android:text="@string/_0"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/payment_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
                         android:layout_below="@id/upload_label"
                         android:layout_centerHorizontal="true"
                         android:text="@string/subidas"
-                        android:textSize="20sp">
-                    </TextView>
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
 
                 </RelativeLayout>
 
@@ -115,8 +137,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="#8D8B84"
-                app:cardElevation="10dp"
-                app:cardCornerRadius="24dp">
+                app:cardCornerRadius="24dp"
+                app:cardElevation="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -127,32 +149,29 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/baseline_favorite_border_24">
-                    </ImageView>
+                        android:src="@drawable/baseline_favorite_border_24" />
 
                     <TextView
                         android:id="@+id/fav_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:textColor="@color/black"
                         android:fontFamily=""
                         android:includeFontPadding="false"
                         android:text="0"
-                        android:textSize="20sp">
-                    </TextView>
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/fav_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/fav_label"
-                        android:textColor="@color/black"
                         android:layout_centerHorizontal="true"
                         android:includeFontPadding="false"
                         android:text="@string/favoritos"
-                        android:textSize="20sp">
-                    </TextView>
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
 
                 </RelativeLayout>
 
@@ -192,9 +211,9 @@
                     android:id="@+id/email_input"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:enabled="false"
                     android:drawableStart="@drawable/baseline_drive_file_rename_outline_24"
                     android:drawablePadding="10dp"
+                    android:enabled="false"
                     android:text="@string/correo_electronico" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -208,9 +227,9 @@
                     android:id="@+id/password_input"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:enabled="false"
                     android:drawableStart="@drawable/baseline_drive_file_rename_outline_24"
                     android:drawablePadding="10dp"
+                    android:enabled="false"
                     android:inputType="textPassword"
                     android:text="@string/contrase_a" />
             </com.google.android.material.textfield.TextInputLayout>

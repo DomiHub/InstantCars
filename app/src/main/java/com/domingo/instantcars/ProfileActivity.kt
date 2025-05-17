@@ -30,6 +30,8 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var logoutButton: Button
     private lateinit var favLabel: TextView
     private lateinit var uploadLabel: TextView
+    private lateinit var ratingBar: RatingBar
+    private lateinit var ratingText: TextView
 
     private var imageBase64: String? = null
 
@@ -52,10 +54,15 @@ class ProfileActivity : AppCompatActivity() {
         logoutButton = findViewById(R.id.logout_button)
         favLabel = findViewById(R.id.fav_label)
         uploadLabel = findViewById(R.id.upload_label)
+        ratingBar = findViewById(R.id.rating_bar_reputation)
+        ratingText = findViewById(R.id.rating_count_text)
 
         cargarDatosUsuario()
         contarFavoritos()
         contarSubidas()
+
+        val uid = auth.currentUser?.uid
+        uid?.let { cargarReputacionPromedio(it) }
 
         imageView.setOnClickListener {
             seleccionarImagenDesdeGaleria()
@@ -69,6 +76,7 @@ class ProfileActivity : AppCompatActivity() {
         cardViewFav.setOnClickListener {
             startActivity(Intent(this, FavoritosActivity::class.java))
         }
+
         cardViewUpload.setOnClickListener {
             startActivity(Intent(this, MisSubidasActivity::class.java))
         }
@@ -76,6 +84,7 @@ class ProfileActivity : AppCompatActivity() {
         updateButton.setOnClickListener {
             actualizarDatosUsuario()
         }
+
         logoutButton.setOnClickListener {
             auth.signOut()
             Toast.makeText(this, "Has cerrado sesión", Toast.LENGTH_SHORT).show()
@@ -86,8 +95,8 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        contarFavoritos() // refresca contador favoritos
-        contarSubidas()   // refresca contador subidas
+        contarFavoritos()
+        contarSubidas()
     }
 
     private fun cargarDatosUsuario() {
@@ -135,7 +144,9 @@ class ProfileActivity : AppCompatActivity() {
                 .show()
             return
         }
+
         updateButton.isEnabled = false
+
         db.collection("users").whereEqualTo("username", nuevoUsername).get()
             .addOnSuccessListener { result ->
                 if (result.any { it.id != uid }) {
@@ -145,18 +156,10 @@ class ProfileActivity : AppCompatActivity() {
                     imageBase64?.let { updates["profile_image"] = it }
                     db.collection("users").document(uid).update(updates)
                         .addOnSuccessListener {
-                            Toast.makeText(
-                                this,
-                                "Perfil actualizado",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(this, "Perfil actualizado", Toast.LENGTH_SHORT).show()
                         }
                         .addOnFailureListener {
-                            Toast.makeText(
-                                this,
-                                "Error al actualizar",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(this, "Error al actualizar", Toast.LENGTH_SHORT).show()
                         }
                 }
                 updateButton.isEnabled = true
@@ -164,6 +167,29 @@ class ProfileActivity : AppCompatActivity() {
             .addOnFailureListener {
                 Toast.makeText(this, "Error al verificar nombre", Toast.LENGTH_SHORT).show()
                 updateButton.isEnabled = true
+            }
+    }
+
+    private fun cargarReputacionPromedio(uid: String) {
+        db.collection("ratings")
+            .whereEqualTo("calificadoA", uid)
+            .get()
+            .addOnSuccessListener { result ->
+                val total = result.size()
+                if (total > 0) {
+                    val suma = result.documents.sumOf {
+                        it.getDouble("valor") ?: 0.0
+                    }
+                    val promedio = suma / total
+                    ratingBar.rating = promedio.toFloat()
+                    ratingText.text = String.format(getString(R.string.calificaciones), promedio, total)
+                } else {
+                    ratingBar.rating = 0f
+                    ratingText.text = getString(R.string._0_calificaciones)
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error al cargar reputación", Toast.LENGTH_SHORT).show()
             }
     }
 

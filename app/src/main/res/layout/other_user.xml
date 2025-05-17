@@ -68,7 +68,7 @@
                 android:layout_below="@id/rating_bar_reputation"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/profile_image"
-                android:text="(0 calificaciones)"
+                android:text="@string/_0_calificaciones"
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
 

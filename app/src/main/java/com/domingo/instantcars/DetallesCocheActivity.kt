@@ -22,6 +22,7 @@ class DetallesCocheActivity : AppCompatActivity() {
     private lateinit var buttonNegociar: Button
     private lateinit var imageViewFavorite: ImageView
     private lateinit var profileImage: ImageView
+    private lateinit var ratingBar: RatingBar
 
     private var userIdPropietario: String? = null
 
@@ -39,6 +40,7 @@ class DetallesCocheActivity : AppCompatActivity() {
         buttonNegociar = findViewById(R.id.buttonNegociar)
         imageViewFavorite = findViewById(R.id.imageViewFavorite)
         profileImage = findViewById(R.id.profile_image)
+        ratingBar = findViewById(R.id.rating_bar_reputation)
 
         val cocheId = intent.getStringExtra("cocheId")
 
@@ -50,10 +52,10 @@ class DetallesCocheActivity : AppCompatActivity() {
             finish()
         }
 
-        // Volver atrás
         findViewById<ImageView>(R.id.back_button).setOnClickListener {
             finish()
         }
+
         fun abrirChat(chatId: String, receiverId: String) {
             val intent = Intent(this, ChatActivity::class.java)
             intent.putExtra("chatId", chatId)
@@ -63,12 +65,11 @@ class DetallesCocheActivity : AppCompatActivity() {
 
         buttonNegociar.setOnClickListener {
             val senderId = FirebaseAuth.getInstance().currentUser?.uid
-            val receiverId = userIdPropietario // El vendedor
+            val receiverId = userIdPropietario
 
             if (senderId != null && receiverId != null && senderId != receiverId) {
                 val db = FirebaseFirestore.getInstance()
 
-                // Paso 1: Buscar si ya existe un chat entre ambos usuarios
                 db.collection("chats")
                     .whereEqualTo("user1", senderId)
                     .whereEqualTo("user2", receiverId)
@@ -78,7 +79,6 @@ class DetallesCocheActivity : AppCompatActivity() {
                             val chatId = query1.documents[0].id
                             abrirChat(chatId, receiverId)
                         } else {
-                            // Invertir búsqueda por si están al revés los user1/user2
                             db.collection("chats")
                                 .whereEqualTo("user1", receiverId)
                                 .whereEqualTo("user2", senderId)
@@ -88,7 +88,6 @@ class DetallesCocheActivity : AppCompatActivity() {
                                         val chatId = query2.documents[0].id
                                         abrirChat(chatId, receiverId)
                                     } else {
-                                        // No existe chat, creamos uno nuevo
                                         val nuevoChat = hashMapOf(
                                             "user1" to senderId,
                                             "user2" to receiverId,
@@ -126,8 +125,6 @@ class DetallesCocheActivity : AppCompatActivity() {
             }
         }
 
-
-        // Navegar al perfil de otro usuario
         val irAOtroPerfil = {
             userIdPropietario?.let {
                 val intent = Intent(this, OtherProfileActivity::class.java)
@@ -139,9 +136,8 @@ class DetallesCocheActivity : AppCompatActivity() {
         textViewNombreUsuario.setOnClickListener { irAOtroPerfil() }
         profileImage.setOnClickListener { irAOtroPerfil() }
 
-        // Botón favorito
         imageViewFavorite.setOnClickListener {
-            val userId = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid
+            val userId = FirebaseAuth.getInstance().currentUser?.uid
             if (userId == null || cocheId == null) return@setOnClickListener
 
             val db = FirebaseFirestore.getInstance()
@@ -187,7 +183,7 @@ class DetallesCocheActivity : AppCompatActivity() {
                     val imagenBase64 = doc.getString("imagen") ?: ""
                     val subidoPorUid = doc.getString("subidoPor") ?: ""
 
-                    userIdPropietario = subidoPorUid  // <- Guardar UID para el intent
+                    userIdPropietario = subidoPorUid
 
                     textViewTituloCoche.text = getString(R.string.MarcaModelo, marca, modelo)
                     textViewPrecioCoche.text = getString(R.string.PrecioCoche, precio)
@@ -203,7 +199,8 @@ class DetallesCocheActivity : AppCompatActivity() {
                         imageViewCoche.setImageResource(R.drawable.errorimagencoche)
                     }
 
-                    // Cargar imagen del usuario
+                    cargarReputacionPromedio(subidoPorUid)
+
                     if (subidoPorUid.isNotEmpty()) {
                         db.collection("users").document(subidoPorUid).get()
                             .addOnSuccessListener { userDoc ->
@@ -233,8 +230,31 @@ class DetallesCocheActivity : AppCompatActivity() {
             }
     }
 
+    private fun cargarReputacionPromedio(uid: String) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("ratings")
+            .whereEqualTo("calificadoA", uid)
+            .get()
+            .addOnSuccessListener { result ->
+                val total = result.size()
+                if (total > 0) {
+                    val suma = result.documents.sumOf {
+                        it.getDouble("valor") ?: 0.0
+                    }
+                    val promedio = suma / total
+                    ratingBar.rating = promedio.toFloat()
+                } else {
+                    ratingBar.rating = 0f
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error al cargar reputación", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
     private fun verificarFavorito(cocheId: String) {
-        val userId = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
         val db = FirebaseFirestore.getInstance()
         db.collection("favoritos")
