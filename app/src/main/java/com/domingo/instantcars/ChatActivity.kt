@@ -1,5 +1,6 @@
 package com.domingo.instantcars
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -48,6 +49,19 @@ class ChatActivity : AppCompatActivity() {
 
         val nombreTextView = findViewById<TextView>(R.id.user_name)
         val imagenPerfil = findViewById<ShapeableImageView>(R.id.profile_image)
+
+        // Ir al perfil del receptor
+        val irAOtroPerfil = {
+            receiverId?.let {
+                val intent = Intent(this, OtherProfileActivity::class.java)
+                intent.putExtra("userId", it)
+                startActivity(intent)
+            }
+        }
+
+        nombreTextView.setOnClickListener { irAOtroPerfil() }
+        imagenPerfil.setOnClickListener { irAOtroPerfil() }
+
 
         // Carga el nombre e imagen del receptor y luego inicia la conversación
         receiverId?.let { id ->

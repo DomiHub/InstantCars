@@ -8,18 +8,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="10dp"
         android:text="Califica al usuario"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="10dp"/>
+        android:textStyle="bold" />
 
     <RatingBar
         android:id="@+id/dialog_rating_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:numStars="5"
-        android:stepSize="0.5"
-        android:layout_gravity="center_horizontal"/>
+        android:progressTint="@android:color/holo_orange_light"
+        android:stepSize="0.5" />
 
 </LinearLayout>

@@ -59,6 +59,7 @@
                 android:layout_toEndOf="@id/profile_image"
                 android:isIndicator="true"
                 android:numStars="5"
+                android:progressTint="@android:color/holo_orange_light"
                 android:stepSize="0.5" />
 
             <TextView
