@@ -73,5 +73,9 @@
     <string name="_0_calificaciones">(0 calificaciones)</string>
     <string name="calificaciones">" %.1f (%d calificaciones)"</string>
     <string name="_0">0</string>
+    <string name="aplicar_filtros">Aplicar filtros</string>
+    <string name="m_ximo_precio">Máximo precio</string>
+    <string name="m_ximo_kilometraje">Máximo kilometraje</string>
+    <string name="limpiar_filtros">Limpiar filtros</string>
 
 </resources>

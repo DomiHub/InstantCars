@@ -4,11 +4,14 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,6 +26,12 @@ class MainPageActivity : AppCompatActivity() {
     private lateinit var searchView: SearchView
     private lateinit var fabAdd: FloatingActionButton
     private lateinit var profileImageView: ImageView
+    private lateinit var fabFilter: FloatingActionButton
+    private var filtroKm: Int? = null
+    private var filtroPrecio: Int? = null
+    private var filtroUbicacion: String = ""
+    private var textoBuscado: String = ""
+
 
     override fun onResume() {
         super.onResume()
@@ -46,15 +55,49 @@ class MainPageActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                filtrarCoches(query)
+                textoBuscado = query ?: ""
+                filtrarTodos()
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                filtrarCoches(newText)
+                textoBuscado = newText ?: ""
+                filtrarTodos()
                 return true
             }
         })
+        fabFilter = findViewById(R.id.fabFilter)
+
+        fabFilter.setOnClickListener {
+            val bottomSheet = layoutInflater.inflate(R.layout.filtros_main_page, null)
+            val dialog = BottomSheetDialog(this)
+            dialog.setContentView(bottomSheet)
+
+            val kmEditText = bottomSheet.findViewById<EditText>(R.id.editTextKm)
+            val precioEditText = bottomSheet.findViewById<EditText>(R.id.editTextPrecio)
+            val ubicacionEditText = bottomSheet.findViewById<EditText>(R.id.editTextUbicacion)
+            val aplicarButton = bottomSheet.findViewById<Button>(R.id.btnAplicarFiltros)
+            val limpiarButton = bottomSheet.findViewById<Button>(R.id.btnLimpiarFiltros)
+
+            aplicarButton.setOnClickListener {
+                filtroKm = kmEditText.text.toString().toIntOrNull()
+                filtroPrecio = precioEditText.text.toString().toIntOrNull()
+                filtroUbicacion = ubicacionEditText.text.toString()
+                filtrarTodos()
+                dialog.dismiss()
+            }
+
+            limpiarButton.setOnClickListener {
+                filtroKm = null
+                filtroPrecio = null
+                filtroUbicacion = ""
+                filtrarTodos()
+                dialog.dismiss()
+            }
+
+            dialog.show()
+        }
+
 
         imageView.setOnClickListener {
             startActivity(Intent(this, ChatListActivity::class.java))
@@ -67,15 +110,60 @@ class MainPageActivity : AppCompatActivity() {
         profileImageView.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
         }
+
+        val fabFilter = findViewById<FloatingActionButton>(R.id.fabFilter)
+
+        fabFilter.setOnClickListener {
+            val bottomSheet = layoutInflater.inflate(R.layout.filtros_main_page, null)
+            val dialog = BottomSheetDialog(this)
+            dialog.setContentView(bottomSheet)
+
+            val kmEditText = bottomSheet.findViewById<EditText>(R.id.editTextKm)
+            val precioEditText = bottomSheet.findViewById<EditText>(R.id.editTextPrecio)
+            val ubicacionEditText = bottomSheet.findViewById<EditText>(R.id.editTextUbicacion)
+            val aplicarButton = bottomSheet.findViewById<Button>(R.id.btnAplicarFiltros)
+            val limpiarButton = bottomSheet.findViewById<Button>(R.id.btnLimpiarFiltros)
+
+            aplicarButton.setOnClickListener {
+                filtroKm = kmEditText.text.toString().toIntOrNull()
+                filtroPrecio = precioEditText.text.toString().toIntOrNull()
+                filtroUbicacion = ubicacionEditText.text.toString()
+                filtrarTodos()
+                dialog.dismiss()
+            }
+
+            limpiarButton.setOnClickListener {
+                // Reset filtros
+                filtroKm = null
+                filtroPrecio = null
+                filtroUbicacion = ""
+                textoBuscado = ""
+
+                // Limpiar campos visuales del bottom sheet
+                kmEditText.text.clear()
+                precioEditText.text.clear()
+                ubicacionEditText.text.clear()
+
+                // Limpiar texto del SearchView
+                searchView.setQuery("", false)
+                searchView.clearFocus()
+
+                // Refrescar lista completa
+                filtrarTodos()
+                dialog.dismiss()
+            }
+
+            dialog.show()
+        }
+
+
     }
 
     private fun cargarFavoritosYActualizar() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val db = FirebaseFirestore.getInstance()
 
-        db.collection("favoritos")
-            .whereEqualTo("subidoPor", userId)
-            .get()
+        db.collection("favoritos").whereEqualTo("subidoPor", userId).get()
             .addOnSuccessListener { documents ->
                 listaFavoritos = documents.mapNotNull { it.getString("cocheId") }
                 cargarCochesDesdeFirebase() // Cargar coches cuando favoritos estén listos
@@ -84,9 +172,7 @@ class MainPageActivity : AppCompatActivity() {
 
     private fun cargarCochesDesdeFirebase() {
         val db = FirebaseFirestore.getInstance()
-        db.collection("coches")
-            .get()
-            .addOnSuccessListener { documents ->
+        db.collection("coches").get().addOnSuccessListener { documents ->
                 listaCoches.clear()
                 for (document in documents) {
                     val coche = Coche(
@@ -108,11 +194,35 @@ class MainPageActivity : AppCompatActivity() {
             }
     }
 
+    private fun filtrarTodos() {
+        val listaFiltrada = listaCoches.filter { coche ->
+            val kmOk = filtroKm == null || (coche.km.toIntOrNull() ?: Int.MAX_VALUE) <= filtroKm!!
+            val precioOk = filtroPrecio == null || (coche.precio.toIntOrNull()
+                ?: Int.MAX_VALUE) <= filtroPrecio!!
+            val ubicacionOk = filtroUbicacion.isEmpty() || coche.ubicacion.contains(
+                filtroUbicacion, ignoreCase = true
+            )
+            val textoOk = textoBuscado.isEmpty() || coche.marca.contains(
+                textoBuscado, true
+            ) || coche.modelo.contains(textoBuscado, true) || coche.ubicacion.contains(
+                textoBuscado, true
+            )
+            kmOk && precioOk && ubicacionOk && textoOk
+        }
+
+        cocheAdapter = CocheAdapter(listaFiltrada).apply {
+            setFavoritos(listaFavoritos)
+        }
+        recyclerView.adapter = cocheAdapter
+    }
+
+
     private fun filtrarCoches(query: String?) {
         val listaFiltrada = listaCoches.filter {
-            it.marca.contains(query ?: "", ignoreCase = true) ||
-                    it.modelo.contains(query ?: "", ignoreCase = true) ||
-                    it.ubicacion.contains(query ?: "", ignoreCase = true)
+            it.marca.contains(query ?: "", ignoreCase = true) || it.modelo.contains(
+                query ?: "",
+                ignoreCase = true
+            ) || it.ubicacion.contains(query ?: "", ignoreCase = true)
         }
         val nuevoAdapter = CocheAdapter(listaFiltrada).apply {
             setFavoritos(listaFavoritos)
@@ -124,8 +234,7 @@ class MainPageActivity : AppCompatActivity() {
         val currentUser = FirebaseAuth.getInstance().currentUser ?: return
         val db = FirebaseFirestore.getInstance()
 
-        db.collection("users").document(currentUser.uid).get()
-            .addOnSuccessListener { document ->
+        db.collection("users").document(currentUser.uid).get().addOnSuccessListener { document ->
                 document.getString("profile_image")?.let { encoded ->
                     val pureBase64 = encoded.substringAfter(",")
                     val imageBytes = Base64.decode(pureBase64, Base64.DEFAULT)

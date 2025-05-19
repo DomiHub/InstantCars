@@ -45,8 +45,8 @@
         android:layout_height="50dp"
         android:adjustViewBounds="true"
         android:clickable="true"
-        android:focusable="true"
         android:contentDescription="@string/bot_n_para_abrir_men_de_usuario"
+        android:focusable="true"
         android:scaleType="centerCrop"
         android:src="@drawable/usuario"
         app:layout_constraintBottom_toBottomOf="@id/searchView"
@@ -71,6 +71,21 @@
         app:layout_constraintTop_toBottomOf="@id/searchView"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_coche" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/aplicar_filtros"
+        android:src="@drawable/baseline_filter_list_24"
+        app:backgroundTint="@android:color/darker_gray"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@android:color/black" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
