@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.chat
 
 import com.google.firebase.Timestamp
 

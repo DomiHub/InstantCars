@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.profile
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.domingo.instantcars.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.android.material.textfield.TextInputEditText

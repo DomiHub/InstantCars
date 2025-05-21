@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/login_background"
     android:padding="16dp"
-    tools:context=".PortalActivity">
+    tools:context=".portal.PortalActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

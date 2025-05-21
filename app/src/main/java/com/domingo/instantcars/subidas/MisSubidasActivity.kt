@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.subidas
 
 import android.os.Bundle
 import android.widget.ImageView
@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.domingo.instantcars.R
+import com.domingo.instantcars.vehiculos.Coche
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 

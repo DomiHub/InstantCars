@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.subidas
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -10,6 +10,9 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.domingo.instantcars.R
+import com.domingo.instantcars.vehiculos.Coche
+import com.domingo.instantcars.vehiculos.DetallesCocheActivity
 
 class SubidasAdapter(
     private val listaSubidas: List<Coche>,

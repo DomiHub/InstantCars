@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.home
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -11,6 +11,12 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.domingo.instantcars.R
+import com.domingo.instantcars.chat.ChatListActivity
+import com.domingo.instantcars.profile.ProfileActivity
+import com.domingo.instantcars.subidas.FormCocheActivity
+import com.domingo.instantcars.vehiculos.Coche
+import com.domingo.instantcars.vehiculos.CocheAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -173,25 +179,25 @@ class MainPageActivity : AppCompatActivity() {
     private fun cargarCochesDesdeFirebase() {
         val db = FirebaseFirestore.getInstance()
         db.collection("coches").get().addOnSuccessListener { documents ->
-                listaCoches.clear()
-                for (document in documents) {
-                    val coche = Coche(
-                        id = document.id,
-                        marca = document.getString("marca") ?: "",
-                        modelo = document.getString("modelo") ?: "",
-                        anio = document.getString("anio") ?: "",
-                        precio = document.getString("precio") ?: "",
-                        km = document.getString("kilometraje") ?: "",
-                        imagen = document.getString("imagen") ?: "",
-                        subidoPor = document.getString("subidoPor") ?: "",
-                        descripcion = document.getString("descripcion") ?: "",
-                        ubicacion = document.getString("ubicacion") ?: ""
-                    )
-                    listaCoches.add(coche)
-                }
-                cocheAdapter.setFavoritos(listaFavoritos)
-                cocheAdapter.notifyDataSetChanged()
+            listaCoches.clear()
+            for (document in documents) {
+                val coche = Coche(
+                    id = document.id,
+                    marca = document.getString("marca") ?: "",
+                    modelo = document.getString("modelo") ?: "",
+                    anio = document.getString("anio") ?: "",
+                    precio = document.getString("precio") ?: "",
+                    km = document.getString("kilometraje") ?: "",
+                    imagen = document.getString("imagen") ?: "",
+                    subidoPor = document.getString("subidoPor") ?: "",
+                    descripcion = document.getString("descripcion") ?: "",
+                    ubicacion = document.getString("ubicacion") ?: ""
+                )
+                listaCoches.add(coche)
             }
+            cocheAdapter.setFavoritos(listaFavoritos)
+            cocheAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun filtrarTodos() {
@@ -222,12 +228,12 @@ class MainPageActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 
         db.collection("users").document(currentUser.uid).get().addOnSuccessListener { document ->
-                document.getString("profile_image")?.let { encoded ->
-                    val pureBase64 = encoded.substringAfter(",")
-                    val imageBytes = Base64.decode(pureBase64, Base64.DEFAULT)
-                    val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                    profileImageView.setImageBitmap(bitmap)
-                }
+            document.getString("profile_image")?.let { encoded ->
+                val pureBase64 = encoded.substringAfter(",")
+                val imageBytes = Base64.decode(pureBase64, Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                profileImageView.setImageBitmap(bitmap)
             }
+        }
     }
 }

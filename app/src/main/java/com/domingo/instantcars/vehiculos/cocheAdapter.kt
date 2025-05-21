@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.vehiculos
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
+import com.domingo.instantcars.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -61,7 +62,9 @@ class CocheAdapter(private val listaCoches: List<Coche>) :
         if (bitmap != null) {
             holder.imgCoche.setImageBitmap(bitmap)
         } else {
-            val drawable = AppCompatResources.getDrawable(holder.itemView.context, R.drawable.errorimagencoche)
+            val drawable = AppCompatResources.getDrawable(holder.itemView.context,
+                R.drawable.errorimagencoche
+            )
             holder.imgCoche.setImageDrawable(drawable)
         }
 

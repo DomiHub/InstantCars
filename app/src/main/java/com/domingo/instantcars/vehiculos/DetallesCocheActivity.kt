@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.vehiculos
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.util.Base64
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.domingo.instantcars.profile.OtherProfileActivity
+import com.domingo.instantcars.R
+import com.domingo.instantcars.chat.ChatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -23,7 +26,6 @@ class DetallesCocheActivity : AppCompatActivity() {
     private lateinit var imageViewFavorite: ImageView
     private lateinit var profileImage: ImageView
     private lateinit var ratingBar: RatingBar
-
     private var userIdPropietario: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

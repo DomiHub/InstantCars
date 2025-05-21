@@ -1,12 +1,12 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.chat
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.domingo.instantcars.R
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -17,15 +17,15 @@ class MensajeAdapter(
     private val receiverName: String // mostrar nombre del receptor
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val ITEM_SENT = 1
-    private val ITEM_RECEIVED = 2
+    private val itemSent = 1
+    private val itemReceived = 2
 
     override fun getItemViewType(position: Int): Int {
-        return if (mensajes[position].senderId == senderId) ITEM_SENT else ITEM_RECEIVED
+        return if (mensajes[position].senderId == senderId) itemSent else itemReceived
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == ITEM_SENT) {
+        return if (viewType == itemSent) {
             val view = LayoutInflater.from(context).inflate(R.layout.item_chat_me, parent, false)
             SentViewHolder(view)
         } else {
@@ -81,6 +81,5 @@ class MensajeAdapter(
         val timestamp: TextView = itemView.findViewById(R.id.text_gchat_timestamp_other)
         val date: TextView = itemView.findViewById(R.id.text_gchat_date_other)
         val username: TextView = itemView.findViewById(R.id.text_gchat_user_other)
-        val profileImage: ImageView = itemView.findViewById(R.id.image_gchat_profile_other)
     }
 }

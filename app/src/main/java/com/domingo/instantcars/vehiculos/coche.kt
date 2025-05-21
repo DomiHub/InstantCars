@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.vehiculos
 
 data class Coche(
     val marca: String = "",

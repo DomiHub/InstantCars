@@ -18,14 +18,14 @@
 
         <!-- Actividad de registro -->
         <activity
-            android:name=".RegisterActivity"
+            android:name=".portal.RegisterActivity"
             android:exported="false"
             android:label="@string/title_activity_register"
             android:theme="@style/Theme.InstantCars" />
 
         <!-- Actividad de portal -->
         <activity
-            android:name=".PortalActivity"
+            android:name=".portal.PortalActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +34,7 @@
         </activity>
 
         <!-- Actividad principal -->
-        <activity android:name=".MainPageActivity"
+        <activity android:name=".home.MainPageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,21 +43,21 @@
         </activity>
 
         <!-- Actividad del formulario del coche -->
-        <activity android:name=".FormCocheActivity" />
+        <activity android:name=".subidas.FormCocheActivity" />
         <!-- Actividad del perfil del usuario -->
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".profile.ProfileActivity" />
         <!-- Actividad de favoritos -->
-        <activity android:name=".FavoritosActivity" />
+        <activity android:name=".favoritos.FavoritosActivity" />
         <!-- Actividad de detalles del coche -->
-        <activity android:name=".DetallesCocheActivity" />
+        <activity android:name=".vehiculos.DetallesCocheActivity" />
         <!-- Actividad de mis subidas -->
-        <activity android:name=".MisSubidasActivity" />
+        <activity android:name=".subidas.MisSubidasActivity" />
         <!-- Actividad de perfil de otro usuario -->
-        <activity android:name=".OtherProfileActivity" />
+        <activity android:name=".profile.OtherProfileActivity" />
         <!-- Actividad de chat -->
-        <activity android:name=".ChatActivity" />
+        <activity android:name=".chat.ChatActivity" />
         <!-- Actividad de lista de chats -->
-        <activity android:name=".ChatListActivity" />
+        <activity android:name=".chat.ChatListActivity" />
 
 
 

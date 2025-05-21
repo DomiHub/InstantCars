@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.portal
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.domingo.instantcars.home.MainPageActivity
+import com.domingo.instantcars.R
 import com.google.firebase.auth.FirebaseAuth
 
 class PortalActivity : AppCompatActivity() {

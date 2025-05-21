@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.chat
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -12,6 +12,8 @@ import com.google.android.material.imageview.ShapeableImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.domingo.instantcars.profile.OtherProfileActivity
+import com.domingo.instantcars.R
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

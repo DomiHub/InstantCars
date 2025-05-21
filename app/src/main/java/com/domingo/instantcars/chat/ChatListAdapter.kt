@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.chat
 
 import android.content.Context
 import android.content.Intent
@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.domingo.instantcars.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat

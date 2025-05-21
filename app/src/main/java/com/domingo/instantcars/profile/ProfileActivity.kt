@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.profile
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -9,6 +9,11 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import com.domingo.instantcars.home.MainPageActivity
+import com.domingo.instantcars.R
+import com.domingo.instantcars.favoritos.FavoritosActivity
+import com.domingo.instantcars.portal.PortalActivity
+import com.domingo.instantcars.subidas.MisSubidasActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

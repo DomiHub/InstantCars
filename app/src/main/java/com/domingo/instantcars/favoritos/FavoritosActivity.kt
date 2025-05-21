@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.favoritos
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.domingo.instantcars.vehiculos.Coche
+import com.domingo.instantcars.profile.ProfileActivity
+import com.domingo.instantcars.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 

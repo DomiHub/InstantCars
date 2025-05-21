@@ -1,4 +1,4 @@
-package com.domingo.instantcars
+package com.domingo.instantcars.portal
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.domingo.instantcars.home.MainPageActivity
+import com.domingo.instantcars.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -19,9 +21,9 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.register_page) // Conectar con register_page.xml
 
 
-        val button_GoTo_login_account = findViewById<Button>(R.id.button_GoTo_login_account)
+        val buttonGoTologinaccount = findViewById<Button>(R.id.button_GoTo_login_account)
 
-        button_GoTo_login_account.setOnClickListener {
+        buttonGoTologinaccount.setOnClickListener {
             val intent = Intent(this, PortalActivity::class.java)
             startActivity(intent)
         }
