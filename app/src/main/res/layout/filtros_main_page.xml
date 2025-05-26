@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layoutBottomSheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,43 +8,88 @@
     android:orientation="vertical"
     android:padding="24dp">
 
-    <EditText
-        android:id="@+id/editTextKm"
+    <!-- Título del filtro -->
+    <TextView
+        android:id="@+id/titleFiltros"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/m_ximo_kilometraje"
-        android:inputType="number" />
+        android:gravity="center"
+        android:paddingBottom="16dp"
+        android:text="@string/filtros_de_b_squeda"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/editTextPrecio"
+    <!-- Kilometraje -->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/m_ximo_precio"
-        android:inputType="number" />
+        android:hint="@string/m_ximo_kilometraje">
 
-    <EditText
-        android:id="@+id/editTextUbicacion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/Ubicación"
-        android:inputType="text" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextKm"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btnLimpiarFiltros"
+    <!-- Precio -->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@android:color/darker_gray"
-        android:text="@string/limpiar_filtros"
-        android:textColor="@android:color/white" />
+        android:layout_marginTop="12dp"
+        android:hint="@string/precio_m_ximo">
 
-    <Button
-        android:id="@+id/btnAplicarFiltros"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextPrecio"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Ubicación -->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/purple_500"
-        android:text="@string/aplicar_filtros"
-        android:textColor="@android:color/white" />
+        android:layout_marginTop="12dp"
+        android:hint="@string/ubicaci_n_por_provincia">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextUbicacion"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Botones -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btnLimpiarFiltros"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_rounded_corner"
+            android:backgroundTint="@android:color/darker_gray"
+            android:text="@string/limpiar_filtros"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btnAplicarFiltros"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_rounded_corner"
+            android:backgroundTint="@color/purple_500"
+            android:text="@string/aplicar_filtros"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -62,7 +62,7 @@ class ChatListAdapter(
                         val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
                         holder.avatar.setImageBitmap(bitmap)
                     } catch (e: Exception) {
-                        Log.e("ChatListAdapter", "Error al decodificar imagen", e)
+                        Log.e("ChatListAdapter", "Error al cargar imagen", e)
                         holder.avatar.setImageResource(R.drawable.usuario)
                     }
                 } else {

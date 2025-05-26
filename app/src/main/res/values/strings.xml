@@ -77,5 +77,8 @@
     <string name="m_ximo_precio">Máximo precio</string>
     <string name="m_ximo_kilometraje">Máximo kilometraje</string>
     <string name="limpiar_filtros">Limpiar filtros</string>
+    <string name="precio_m_ximo">Precio Máximo</string>
+    <string name="filtros_de_b_squeda">Filtros de búsqueda</string>
+    <string name="ubicaci_n_por_provincia">Ubicación por provincia</string>
 
 </resources>

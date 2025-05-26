@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:background="@drawable/button_rounded_corner"
+            android:background="@drawable/button_rounded_corner_portal"
             android:padding="18dp"
             android:text="@string/iniciar_sesi_n"
             android:textColor="#000000"
@@ -87,8 +87,8 @@
             android:textStyle="normal"
             android:fontFamily="sans-serif"
             android:letterSpacing="0.02"
-            android:padding="8dp"
             android:background="?attr/selectableItemBackground"
+            android:padding="8dp"
             />
 
         <LinearLayout

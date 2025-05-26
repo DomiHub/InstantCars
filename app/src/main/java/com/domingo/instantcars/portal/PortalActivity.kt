@@ -12,7 +12,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 class PortalActivity : AppCompatActivity() {
 
-    private fun ComprobarSesion() {
+//Metodo que comprueba si el usuario ya tiene una sesion iniciada
+    private fun comprobarSesion() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
             val intent = Intent(this, MainPageActivity::class.java)
@@ -25,7 +26,7 @@ class PortalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_page)
 
-        ComprobarSesion()
+        comprobarSesion()
 
         //Evento para ir a la pagina de registro
         val button_GoTo_create_account = findViewById<Button>(R.id.button_GoTo_create_account)
@@ -58,7 +59,6 @@ class PortalActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // Usuario autenticado correctamente
                         Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
 
                         val intent = Intent(this, MainPageActivity::class.java)
@@ -66,7 +66,6 @@ class PortalActivity : AppCompatActivity() {
                         finish() // Evita que vuelva a la pantalla de login con el botón atrás
 
                     } else {
-                        // Error al iniciar sesión
                         Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_LONG)
                             .show()
                     }

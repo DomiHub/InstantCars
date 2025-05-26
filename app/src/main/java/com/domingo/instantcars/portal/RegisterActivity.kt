@@ -60,8 +60,6 @@ class RegisterActivity : AppCompatActivity() {
                             "username" to userName,
                             "email" to email,
                             "uid" to user?.uid,
-                            // Se puede poner otros campos necesarios, como reputación inicial, ubicación, etc.
-                            "reputation" to 0
                         )
 
                         db.collection("users").document(user!!.uid)

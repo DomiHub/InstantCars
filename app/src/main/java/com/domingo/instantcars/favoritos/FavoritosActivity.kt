@@ -1,5 +1,6 @@
 package com.domingo.instantcars.favoritos
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
@@ -42,6 +43,7 @@ class FavoritosActivity : AppCompatActivity() {
         cargarFavoritosDesdeFirestore()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun cargarFavoritosDesdeFirestore() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val db = FirebaseFirestore.getInstance()
@@ -76,7 +78,11 @@ class FavoritosActivity : AppCompatActivity() {
                                 }
                             }
                             .addOnFailureListener {
-                                // Puedes mostrar un error individual si quieres aquí
+                                Toast.makeText(
+                                    this,
+                                    "Error al cargar el coche",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                             .addOnCompleteListener {
                                 cochesCargados++
