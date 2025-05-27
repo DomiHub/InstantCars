@@ -80,5 +80,8 @@
     <string name="precio_m_ximo">Precio Máximo</string>
     <string name="filtros_de_b_squeda">Filtros de búsqueda</string>
     <string name="ubicaci_n_por_provincia">Ubicación por provincia</string>
+    <string name="califica_al_usuario">Califica al usuario</string>
+    <string name="tus_subidas">Tus subidas</string>
+    <string name="tus_favoritos">Tus favoritos</string>
 
 </resources>

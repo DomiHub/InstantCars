@@ -1,6 +1,7 @@
 package com.domingo.instantcars.home
 
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -21,6 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.core.View
 
 class MainPageActivity : AppCompatActivity() {
 
@@ -44,6 +46,7 @@ class MainPageActivity : AppCompatActivity() {
         cargarFavoritosYActualizar() // Recargar coches + favoritos al volver
         cargarImagenPerfil() // Cargar imagen de perfil también
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
