@@ -14,7 +14,7 @@ class MensajeAdapter(
     private val context: Context,
     private val mensajes: List<Mensaje>,
     private val senderId: String,
-    private val receiverName: String // mostrar nombre del receptor
+    private val receiverName: String
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val itemSent = 1

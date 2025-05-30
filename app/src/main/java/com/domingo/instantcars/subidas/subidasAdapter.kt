@@ -55,7 +55,7 @@ class SubidasAdapter(
                 imgCoche.setImageResource(R.drawable.errorimagencoche)
             }
 
-            // Click en la tarjeta → detalles
+            // Click en la tarjeta
             itemView.setOnClickListener {
                 val ctx = it.context
                 val intent = Intent(ctx, DetallesCocheActivity::class.java)

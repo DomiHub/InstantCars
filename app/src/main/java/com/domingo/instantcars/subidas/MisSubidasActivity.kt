@@ -76,7 +76,6 @@ class MisSubidasActivity : AppCompatActivity() {
             db.collection("coches").document(it)
                 .delete()
                 .addOnSuccessListener {
-                    // 2) Borramos en favoritos todas las referencias a este coche
                     db.collection("favoritos")
                         .whereEqualTo("cocheId", coche.id)
                         .get()
@@ -86,7 +85,6 @@ class MisSubidasActivity : AppCompatActivity() {
                             }
                         }
 
-                    // 3) Actualizamos lista en pantalla
                     listaSubidas.remove(coche)
                     adapter.notifyDataSetChanged()
                     Toast.makeText(this, "Coche eliminado correctamente", Toast.LENGTH_SHORT).show()

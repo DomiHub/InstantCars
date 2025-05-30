@@ -21,6 +21,7 @@ class DetallesCocheActivity : AppCompatActivity() {
     private lateinit var textViewUbi: TextView
     private lateinit var textViewKm: TextView
     private lateinit var textViewNombreUsuario: TextView
+    private lateinit var textViewAnio: TextView
     private lateinit var textViewDescripcion: TextView
     private lateinit var buttonNegociar: Button
     private lateinit var imageViewFavorite: ImageView
@@ -38,6 +39,7 @@ class DetallesCocheActivity : AppCompatActivity() {
         textViewNombreUsuario = findViewById(R.id.textViewNombreUsuario)
         textViewUbi = findViewById(R.id.textViewUbi)
         textViewKm = findViewById(R.id.textViewKm)
+        textViewAnio = findViewById(R.id.textViewAnio)
         textViewDescripcion = findViewById(R.id.textViewDescripcion)
         buttonNegociar = findViewById(R.id.buttonNegociar)
         imageViewFavorite = findViewById(R.id.imageViewFavorite)
@@ -180,6 +182,7 @@ class DetallesCocheActivity : AppCompatActivity() {
                     val precio = doc.getString("precio") ?: ""
                     val ubicacion = doc.getString("ubicacion") ?: ""
                     val kilometraje = doc.getString("kilometraje") ?: ""
+                    val anio = doc.getString("año") ?: ""
                     val subidoPorNombre = doc.getString("subidoPorNombre") ?: ""
                     val descripcion = doc.getString("descripcion") ?: ""
                     val imagenBase64 = doc.getString("imagen") ?: ""
@@ -190,6 +193,7 @@ class DetallesCocheActivity : AppCompatActivity() {
                     textViewTituloCoche.text = getString(R.string.MarcaModelo, marca, modelo)
                     textViewPrecioCoche.text = getString(R.string.PrecioCoche, precio)
                     textViewUbi.text = ubicacion
+                    textViewAnio.text = getString(R.string.anio_coche, anio)
                     textViewKm.text = getString(R.string.kilometrajeKm, kilometraje)
                     textViewNombreUsuario.text = subidoPorNombre
                     textViewDescripcion.text = descripcion

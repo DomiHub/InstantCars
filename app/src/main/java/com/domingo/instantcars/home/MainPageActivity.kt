@@ -22,7 +22,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.core.View
 
 class MainPageActivity : AppCompatActivity() {
 
@@ -40,13 +39,11 @@ class MainPageActivity : AppCompatActivity() {
     private var filtroUbicacion: String = ""
     private var textoBuscado: String = ""
 
-
     override fun onResume() {
         super.onResume()
-        cargarFavoritosYActualizar() // Recargar coches + favoritos al volver
-        cargarImagenPerfil() // Cargar imagen de perfil también
+        cargarFavoritosYActualizar()
+        cargarImagenPerfil()
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +54,7 @@ class MainPageActivity : AppCompatActivity() {
         imageView = findViewById(R.id.imageViewChat)
         fabAdd = findViewById(R.id.fabAdd)
         profileImageView = findViewById(R.id.profile_image)
+        fabFilter = findViewById(R.id.fabFilter)
 
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         cocheAdapter = CocheAdapter(listaCoches)
@@ -75,7 +73,6 @@ class MainPageActivity : AppCompatActivity() {
                 return true
             }
         })
-        fabFilter = findViewById(R.id.fabFilter)
 
         fabFilter.setOnClickListener {
             val bottomSheet = layoutInflater.inflate(R.layout.filtros_main_page, null)
@@ -100,13 +97,20 @@ class MainPageActivity : AppCompatActivity() {
                 filtroKm = null
                 filtroPrecio = null
                 filtroUbicacion = ""
+                textoBuscado = ""
+
+                kmEditText.text.clear()
+                precioEditText.text.clear()
+                ubicacionEditText.text.clear()
+                searchView.setQuery("", false)
+                searchView.clearFocus()
+
                 filtrarTodos()
                 dialog.dismiss()
             }
 
             dialog.show()
         }
-
 
         imageView.setOnClickListener {
             startActivity(Intent(this, ChatListActivity::class.java))
@@ -119,53 +123,6 @@ class MainPageActivity : AppCompatActivity() {
         profileImageView.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
         }
-
-        val fabFilter = findViewById<FloatingActionButton>(R.id.fabFilter)
-
-        fabFilter.setOnClickListener {
-            val bottomSheet = layoutInflater.inflate(R.layout.filtros_main_page, null)
-            val dialog = BottomSheetDialog(this)
-            dialog.setContentView(bottomSheet)
-
-            val kmEditText = bottomSheet.findViewById<EditText>(R.id.editTextKm)
-            val precioEditText = bottomSheet.findViewById<EditText>(R.id.editTextPrecio)
-            val ubicacionEditText = bottomSheet.findViewById<EditText>(R.id.editTextUbicacion)
-            val aplicarButton = bottomSheet.findViewById<Button>(R.id.btnAplicarFiltros)
-            val limpiarButton = bottomSheet.findViewById<Button>(R.id.btnLimpiarFiltros)
-
-            aplicarButton.setOnClickListener {
-                filtroKm = kmEditText.text.toString().toIntOrNull()
-                filtroPrecio = precioEditText.text.toString().toIntOrNull()
-                filtroUbicacion = ubicacionEditText.text.toString()
-                filtrarTodos()
-                dialog.dismiss()
-            }
-
-            limpiarButton.setOnClickListener {
-                // Reset filtros
-                filtroKm = null
-                filtroPrecio = null
-                filtroUbicacion = ""
-                textoBuscado = ""
-
-                // Limpiar campos visuales del bottom sheet
-                kmEditText.text.clear()
-                precioEditText.text.clear()
-                ubicacionEditText.text.clear()
-
-                // Limpiar texto del SearchView
-                searchView.setQuery("", false)
-                searchView.clearFocus()
-
-                // Refrescar lista completa
-                filtrarTodos()
-                dialog.dismiss()
-            }
-
-            dialog.show()
-        }
-
-
     }
 
     private fun cargarFavoritosYActualizar() {
@@ -175,12 +132,14 @@ class MainPageActivity : AppCompatActivity() {
         db.collection("favoritos").whereEqualTo("subidoPor", userId).get()
             .addOnSuccessListener { documents ->
                 listaFavoritos = documents.mapNotNull { it.getString("cocheId") }
-                cargarCochesDesdeFirebase() // Cargar coches cuando favoritos estén listos
+                cargarCochesDesdeFirebase()
             }
     }
 
     private fun cargarCochesDesdeFirebase() {
         val db = FirebaseFirestore.getInstance()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
         db.collection("coches").get().addOnSuccessListener { documents ->
             listaCoches.clear()
             for (document in documents) {
@@ -196,7 +155,10 @@ class MainPageActivity : AppCompatActivity() {
                     descripcion = document.getString("descripcion") ?: "",
                     ubicacion = document.getString("ubicacion") ?: ""
                 )
-                listaCoches.add(coche)
+                // 🔥 Solo incluir coches que NO sean del usuario actual
+                if (coche.subidoPor != userId) {
+                    listaCoches.add(coche)
+                }
             }
             cocheAdapter.setFavoritos(listaFavoritos)
             cocheAdapter.notifyDataSetChanged()
@@ -224,7 +186,6 @@ class MainPageActivity : AppCompatActivity() {
         }
         recyclerView.adapter = cocheAdapter
     }
-
 
     private fun cargarImagenPerfil() {
         val currentUser = FirebaseAuth.getInstance().currentUser ?: return

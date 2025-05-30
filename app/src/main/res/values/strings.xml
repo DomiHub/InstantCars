@@ -83,5 +83,7 @@
     <string name="califica_al_usuario">Califica al usuario</string>
     <string name="tus_subidas">Tus subidas</string>
     <string name="tus_favoritos">Tus favoritos</string>
+    <string name="a_o">Año</string>
+    <string name="anio_coche">Año: %1$s</string>
 
 </resources>

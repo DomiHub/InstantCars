@@ -28,7 +28,6 @@ class PortalActivity : AppCompatActivity() {
 
         comprobarSesion()
 
-        //Evento para ir a la pagina de registro
         val button_GoTo_create_account = findViewById<Button>(R.id.button_GoTo_create_account)
 
         button_GoTo_create_account.setOnClickListener {
@@ -43,12 +42,10 @@ class PortalActivity : AppCompatActivity() {
         val editTextEmail = findViewById<EditText>(R.id.email_edit_text)
         val editTextPassword = findViewById<EditText>(R.id.password_edit_text)
 
-        // Configurar el botón de login
         button_login.setOnClickListener {
             val email = editTextEmail.text.toString().trim()
             val password = editTextPassword.text.toString().trim()
 
-            // Validar campos vacíos
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT)
                     .show()

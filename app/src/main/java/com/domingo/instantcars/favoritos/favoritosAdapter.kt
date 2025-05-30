@@ -50,7 +50,7 @@ class FavoritosAdapter(
                 val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
                 imgCoche.setImageBitmap(bitmap)
             } catch (e: Exception) {
-                imgCoche.setImageResource(R.drawable.errorimagencoche)  // Imagen por defecto en caso de error
+                imgCoche.setImageResource(R.drawable.errorimagencoche)
             }
 
             // Clic para eliminar de favoritos
@@ -62,7 +62,7 @@ class FavoritosAdapter(
             itemView.setOnClickListener {
                 val context = itemView.context
                 val intent = Intent(context, DetallesCocheActivity::class.java)
-                intent.putExtra("cocheId", coche.id)  // Pasamos el id del coche
+                intent.putExtra("cocheId", coche.id)
                 context.startActivity(intent)
             }
         }

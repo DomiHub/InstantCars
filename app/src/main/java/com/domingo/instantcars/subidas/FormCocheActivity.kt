@@ -36,13 +36,11 @@ class FormCocheActivity : AppCompatActivity() {
     private var selectedImageBitmap: Bitmap? = null
     private val db = FirebaseFirestore.getInstance()
 
-    // Definir el ActivityResultLauncher
     private val selectImageLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
                 val inputStream: InputStream? = contentResolver.openInputStream(it)
                 selectedImageBitmap = BitmapFactory.decodeStream(inputStream)
-                // Mostrar la imagen seleccionada en el ImageView
                 previewImageView.setImageBitmap(selectedImageBitmap)
                 previewImageView.visibility = ImageView.VISIBLE
             }
@@ -52,7 +50,6 @@ class FormCocheActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.formulario_coche)
 
-        // Inicializar vistas
         brandEditText = findViewById(R.id.brand_edit_text)
         modelEditText = findViewById(R.id.model_edit_text)
         yearSpinner = findViewById(R.id.year_spinner)
@@ -66,7 +63,7 @@ class FormCocheActivity : AppCompatActivity() {
 
         // Llenar el Spinner con los años en orden descendente
         val currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
-        val years = (2000..currentYear).map { it.toString() }.reversed() // Orden descendente
+        val years = (2000..currentYear).map { it.toString() }.reversed()
 
         // Agregar un "placeholder" en la primera posición para que salga en el Spinner
         val yearsWithPlaceholder = mutableListOf("Año del vehículo") + years
@@ -79,7 +76,6 @@ class FormCocheActivity : AppCompatActivity() {
         // Establecer el valor predeterminado en "Año del vehículo"
         yearSpinner.setSelection(0)
 
-        // Lista de provincias de España
         val provincias = listOf(
             "Seleccione una provincia", "A Coruña", "Álava", "Albacete", "Alicante", "Almería",
             "Asturias", "Ávila", "Badajoz", "Barcelona", "Burgos", "Cáceres", "Cádiz", "Cantabria",
@@ -96,16 +92,13 @@ class FormCocheActivity : AppCompatActivity() {
         ubicacionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         ubispinner.adapter = ubicacionAdapter
 
-        // Establecer el valor predeterminado en "Seleccione una provincia"
         ubispinner.setSelection(0)
 
 
-        // Evento para seleccionar imagen
         selectImageButton.setOnClickListener {
             seleccionarImagenDesdeGaleria()
         }
 
-        // Evento para registrar el coche en Firestore
         registerCarButton.setOnClickListener {
             subirDatosDelCoche()
         }
@@ -118,14 +111,12 @@ class FormCocheActivity : AppCompatActivity() {
     }
 
 
-    //Abre la galería para seleccionar una imagen.
 
     private fun seleccionarImagenDesdeGaleria() {
         selectImageLauncher.launch("image/*")
     }
 
 
-    //Convierte un Bitmap a una cadena en formato Base64.
 
     private fun convertirImagenABase64(bitmap: Bitmap): String {
         val outputStream = ByteArrayOutputStream()
@@ -147,16 +138,13 @@ class FormCocheActivity : AppCompatActivity() {
         val ubicacion = ubispinner.selectedItem?.toString() ?: ""
 
 
-        // Validar que todos los campos estén llenos
         if (marca.isEmpty() || modelo.isEmpty() || kilometraje.isEmpty() || precio.isEmpty() || descripcion.isEmpty() || selectedImageBitmap == null || year == "Año del vehículo" || ubicacion == "Seleccione su provincia") {
             Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Convertir imagen a Base64
         val imagenBase64 = selectedImageBitmap?.let { convertirImagenABase64(it) } ?: ""
 
-        // Obtener el ID del usuario actual
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
         // Acceder a Firestore y obtener el nombre de usuario
@@ -166,7 +154,6 @@ class FormCocheActivity : AppCompatActivity() {
         userRef.get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
-                    // Extraer el nombre de usuario desde el documento
                     val username = document.getString("username") ?: "Usuario desconocido"
 
                     // Crear el objeto coche
@@ -178,8 +165,8 @@ class FormCocheActivity : AppCompatActivity() {
                         "precio" to precio,
                         "descripcion" to descripcion,
                         "imagen" to imagenBase64,
-                        "subidoPor" to userId,  // Siempre UID para que las reglas de seguridad funcionen
-                        "subidoPorNombre" to username, // Nombre para mostrar
+                        "subidoPor" to userId,
+                        "subidoPorNombre" to username,
                         "ubicacion" to ubicacion
                     )
                     // Subir los datos a Firestore
@@ -188,7 +175,7 @@ class FormCocheActivity : AppCompatActivity() {
                         .addOnSuccessListener {
                             Toast.makeText(this, "Coche registrado con éxito", Toast.LENGTH_LONG)
                                 .show()
-                            finish() // Cierra la actividad después de subir los datos
+                            finish()
                         }
                         .addOnFailureListener {
                             Toast.makeText(this, "Error al subir los datos", Toast.LENGTH_SHORT)

@@ -54,7 +54,7 @@
                     android:src="@drawable/outline_favorite_24" />
             </RelativeLayout>
 
-            <!-- NUEVO bloque con ConstraintLayout para separación -->
+            <!--  bloque con ConstraintLayout para separación -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +105,17 @@
                         android:textColor="#FFA8A8"
                         android:textSize="16sp"
                         android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/textViewAnio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/a_o"
+                        android:textColor="#FF88A8"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
+
 
                 <!-- Usuario -->
                 <LinearLayout

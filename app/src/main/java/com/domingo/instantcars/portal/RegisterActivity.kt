@@ -18,8 +18,7 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.register_page) // Conectar con register_page.xml
-
+        setContentView(R.layout.register_page)
 
         val buttonGoTologinaccount = findViewById<Button>(R.id.button_GoTo_login_account)
 
@@ -30,13 +29,11 @@ class RegisterActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        // Obtener referencias a los elementos de la interfaz de usuario
         val editTextEmail = findViewById<EditText>(R.id.email_edit_text)
         val user_edit_text = findViewById<EditText>(R.id.user_edit_text)
         val editTextPassword = findViewById<EditText>(R.id.password_edit_text)
         val btnRegister = findViewById<Button>(R.id.button_register)
 
-        // Configurar el botón de registro
         btnRegister.setOnClickListener {
             val email = editTextEmail.text.toString().trim()
             val userName = user_edit_text.text.toString().trim()

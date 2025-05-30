@@ -33,7 +33,7 @@ class CocheAdapter(private val listaCoches: List<Coche>) :
         val txtUbi: TextView = itemView.findViewById(R.id.txtUbi)
         val btnFavorito: ImageButton = itemView.findViewById(R.id.btnFavorito)
         val cardCoche: View =
-            itemView.findViewById(R.id.cardCoche) // La CardView que se va a hacer clickeable
+            itemView.findViewById(R.id.cardCoche)
     }
 
     fun setFavoritos(lista: List<String>) {
@@ -56,13 +56,13 @@ class CocheAdapter(private val listaCoches: List<Coche>) :
         holder.txtPrecio.text = coche.precio + "€"
         holder.txtUbi.text = coche.ubicacion
 
-        // Convertir Base64 a Bitmap para la imagen
         val bitmap = convertirBase64ABitmap(coche.imagen)
 
         if (bitmap != null) {
             holder.imgCoche.setImageBitmap(bitmap)
         } else {
-            val drawable = AppCompatResources.getDrawable(holder.itemView.context,
+            val drawable = AppCompatResources.getDrawable(
+                holder.itemView.context,
                 R.drawable.errorimagencoche
             )
             holder.imgCoche.setImageDrawable(drawable)
@@ -100,7 +100,6 @@ class CocheAdapter(private val listaCoches: List<Coche>) :
                         holder.itemView.context, "Error: ${e.message}", Toast.LENGTH_SHORT
                     ).show()
                 }
-            //Solo va cuando le doy a favoritos y la imagen no cuadra bien(POR CORREGIR)
         }
         holder.cardCoche.setOnClickListener {
             if (coche.id != null) {
