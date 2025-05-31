@@ -7,7 +7,7 @@
     android:focusable="true"
     app:cardCornerRadius="10dp"
     app:cardElevation="4dp"
-    android:id="@+id/cardCoche"> <!-- Asegúrate de que la CardView tenga este ID -->
+    android:id="@+id/cardCoche">
 
     <FrameLayout
         android:layout_width="match_parent"

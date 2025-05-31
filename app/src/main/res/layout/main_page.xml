@@ -55,7 +55,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/CircularShape" />
 
-    <!-- RecyclerView para mostrar coches -->
 
     <!-- Botón flotante de "+" -->
     <androidx.recyclerview.widget.RecyclerView

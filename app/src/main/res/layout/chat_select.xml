@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <!-- AppBar con barra superior personalizada -->
+    <!-- AppBar -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_conversaciones"
         android:layout_width="match_parent"

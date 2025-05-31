@@ -40,13 +40,11 @@ class SubidasAdapter(
         private val btnEliminar: ImageButton = itemView.findViewById(R.id.btnFavorito)
 
         fun bind(coche: Coche, onEliminar: (Coche) -> Unit) {
-            // Texto
             txtMarca.text = coche.marca
             txtModelo.text = coche.modelo
             txtPrecio.text = "${coche.precio} €"
             txtUbi.text = coche.ubicacion
 
-            // Imagen (Base64)
             try {
                 val bytes = Base64.decode(coche.imagen.substringAfter(","), Base64.DEFAULT)
                 val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
@@ -55,7 +53,6 @@ class SubidasAdapter(
                 imgCoche.setImageResource(R.drawable.errorimagencoche)
             }
 
-            // Click en la tarjeta
             itemView.setOnClickListener {
                 val ctx = it.context
                 val intent = Intent(ctx, DetallesCocheActivity::class.java)
@@ -63,7 +60,6 @@ class SubidasAdapter(
                 ctx.startActivity(intent)
             }
 
-            // Botón eliminar
             btnEliminar.setImageResource(R.drawable.round_remove_circle_outline_24)
             btnEliminar.setOnClickListener {
                 onEliminar(coche)

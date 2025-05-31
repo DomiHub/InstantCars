@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.domingo.instantcars.profile.OtherProfileActivity
@@ -74,19 +75,14 @@ class DetallesCocheActivity : AppCompatActivity() {
             if (senderId != null && receiverId != null && senderId != receiverId) {
                 val db = FirebaseFirestore.getInstance()
 
-                db.collection("chats")
-                    .whereEqualTo("user1", senderId)
-                    .whereEqualTo("user2", receiverId)
-                    .get()
-                    .addOnSuccessListener { query1 ->
+                db.collection("chats").whereEqualTo("user1", senderId)
+                    .whereEqualTo("user2", receiverId).get().addOnSuccessListener { query1 ->
                         if (!query1.isEmpty) {
                             val chatId = query1.documents[0].id
                             abrirChat(chatId, receiverId)
                         } else {
-                            db.collection("chats")
-                                .whereEqualTo("user1", receiverId)
-                                .whereEqualTo("user2", senderId)
-                                .get()
+                            db.collection("chats").whereEqualTo("user1", receiverId)
+                                .whereEqualTo("user2", senderId).get()
                                 .addOnSuccessListener { query2 ->
                                     if (!query2.isEmpty) {
                                         val chatId = query2.documents[0].id
@@ -100,13 +96,11 @@ class DetallesCocheActivity : AppCompatActivity() {
                                             "timestamp" to com.google.firebase.Timestamp.now()
                                         )
 
-                                        db.collection("chats")
-                                            .add(nuevoChat)
+                                        db.collection("chats").add(nuevoChat)
                                             .addOnSuccessListener { documentReference ->
                                                 val nuevoChatId = documentReference.id
                                                 abrirChat(nuevoChatId, receiverId)
-                                            }
-                                            .addOnFailureListener { e ->
+                                            }.addOnFailureListener { e ->
                                                 Toast.makeText(
                                                     this,
                                                     "Error creando chat: ${e.message}",
@@ -116,16 +110,11 @@ class DetallesCocheActivity : AppCompatActivity() {
                                     }
                                 }
                         }
-                    }
-                    .addOnFailureListener { e ->
+                    }.addOnFailureListener { e ->
                         Toast.makeText(
-                            this,
-                            "Error al buscar chat: ${e.message}",
-                            Toast.LENGTH_SHORT
+                            this, "Error al buscar chat: ${e.message}", Toast.LENGTH_SHORT
                         ).show()
                     }
-            } else {
-                Toast.makeText(this, "No puedes negociar contigo mismo", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -145,15 +134,11 @@ class DetallesCocheActivity : AppCompatActivity() {
             if (userId == null || cocheId == null) return@setOnClickListener
 
             val db = FirebaseFirestore.getInstance()
-            db.collection("favoritos")
-                .whereEqualTo("subidoPor", userId)
-                .whereEqualTo("cocheId", cocheId)
-                .get()
-                .addOnSuccessListener { docs ->
+            db.collection("favoritos").whereEqualTo("subidoPor", userId)
+                .whereEqualTo("cocheId", cocheId).get().addOnSuccessListener { docs ->
                     if (docs.isEmpty) {
                         val favorito = mapOf(
-                            "subidoPor" to userId,
-                            "cocheId" to cocheId
+                            "subidoPor" to userId, "cocheId" to cocheId
                         )
                         db.collection("favoritos").add(favorito)
                         imageViewFavorite.setImageResource(R.drawable.baseline_favorite_24)
@@ -165,8 +150,7 @@ class DetallesCocheActivity : AppCompatActivity() {
                         imageViewFavorite.setImageResource(R.drawable.outline_favorite_24)
                         Toast.makeText(this, "Eliminado de favoritos", Toast.LENGTH_SHORT).show()
                     }
-                }
-                .addOnFailureListener { e ->
+                }.addOnFailureListener { e ->
                     Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
@@ -174,8 +158,7 @@ class DetallesCocheActivity : AppCompatActivity() {
 
     private fun cargarDetallesCoche(cocheId: String) {
         val db = FirebaseFirestore.getInstance()
-        db.collection("coches").document(cocheId).get()
-            .addOnSuccessListener { doc ->
+        db.collection("coches").document(cocheId).get().addOnSuccessListener { doc ->
                 if (doc.exists()) {
                     val marca = doc.getString("marca") ?: ""
                     val modelo = doc.getString("modelo") ?: ""
@@ -205,7 +188,14 @@ class DetallesCocheActivity : AppCompatActivity() {
                         imageViewCoche.setImageResource(R.drawable.errorimagencoche)
                     }
 
-                    cargarReputacionPromedio(subidoPorUid)
+                    val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+                    if (currentUserId == subidoPorUid) {
+                        buttonNegociar.visibility = View.GONE
+                        imageViewFavorite.visibility = View.GONE
+                        ratingBar.visibility = View.GONE
+                    } else {
+                        cargarReputacionPromedio(subidoPorUid)
+                    }
 
                     if (subidoPorUid.isNotEmpty()) {
                         db.collection("users").document(subidoPorUid).get()
@@ -215,9 +205,7 @@ class DetallesCocheActivity : AppCompatActivity() {
                                     val imageBytes =
                                         Base64.decode(it.substringAfter(","), Base64.DEFAULT)
                                     val bitmap2 = BitmapFactory.decodeByteArray(
-                                        imageBytes,
-                                        0,
-                                        imageBytes.size
+                                        imageBytes, 0, imageBytes.size
                                     )
                                     profileImage.setImageBitmap(bitmap2)
                                 }
@@ -228,8 +216,7 @@ class DetallesCocheActivity : AppCompatActivity() {
                     Toast.makeText(this, "Coche no encontrado", Toast.LENGTH_SHORT).show()
                     finish()
                 }
-            }
-            .addOnFailureListener { e ->
+            }.addOnFailureListener { e ->
                 Toast.makeText(this, "Error al cargar datos: ${e.message}", Toast.LENGTH_SHORT)
                     .show()
                 finish()
@@ -238,9 +225,7 @@ class DetallesCocheActivity : AppCompatActivity() {
 
     private fun cargarReputacionPromedio(uid: String) {
         val db = FirebaseFirestore.getInstance()
-        db.collection("ratings")
-            .whereEqualTo("calificadoA", uid)
-            .get()
+        db.collection("ratings").whereEqualTo("calificadoA", uid).get()
             .addOnSuccessListener { result ->
                 val total = result.size()
                 if (total > 0) {
@@ -252,22 +237,17 @@ class DetallesCocheActivity : AppCompatActivity() {
                 } else {
                     ratingBar.rating = 0f
                 }
-            }
-            .addOnFailureListener {
+            }.addOnFailureListener {
                 Toast.makeText(this, "Error al cargar reputación", Toast.LENGTH_SHORT).show()
             }
     }
-
 
     private fun verificarFavorito(cocheId: String) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
         val db = FirebaseFirestore.getInstance()
-        db.collection("favoritos")
-            .whereEqualTo("subidoPor", userId)
-            .whereEqualTo("cocheId", cocheId)
-            .get()
-            .addOnSuccessListener { docs ->
+        db.collection("favoritos").whereEqualTo("subidoPor", userId)
+            .whereEqualTo("cocheId", cocheId).get().addOnSuccessListener { docs ->
                 if (docs.isEmpty) {
                     imageViewFavorite.setImageResource(R.drawable.outline_favorite_24)
                 } else {

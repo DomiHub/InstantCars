@@ -1,7 +1,6 @@
 package com.domingo.instantcars.home
 
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -155,7 +154,7 @@ class MainPageActivity : AppCompatActivity() {
                     descripcion = document.getString("descripcion") ?: "",
                     ubicacion = document.getString("ubicacion") ?: ""
                 )
-                // 🔥 Solo incluir coches que NO sean del usuario actual
+                // Incluir coches que no sean del usuario actual
                 if (coche.subidoPor != userId) {
                     listaCoches.add(coche)
                 }

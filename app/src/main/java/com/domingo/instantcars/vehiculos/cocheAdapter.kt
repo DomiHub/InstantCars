@@ -1,6 +1,5 @@
 package com.domingo.instantcars.vehiculos
 
-import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -46,7 +45,6 @@ class CocheAdapter(private val listaCoches: List<Coche>) :
         return CocheViewHolder(view)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CocheViewHolder, position: Int) {
         val coche = listaCoches[position]
 

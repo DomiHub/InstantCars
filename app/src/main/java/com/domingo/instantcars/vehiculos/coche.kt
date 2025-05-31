@@ -11,5 +11,5 @@ data class Coche(
     val subidoPorNombre: String = "",
     val descripcion: String = "",
     val ubicacion: String = "",
-    @Transient val id: String? = null  // El id del documento en Firestore (no se sube a Firestore)
+    @Transient val id: String? = null
 )

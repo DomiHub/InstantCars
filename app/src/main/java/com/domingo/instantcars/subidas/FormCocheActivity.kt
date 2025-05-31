@@ -87,7 +87,6 @@ class FormCocheActivity : AppCompatActivity() {
             "Valladolid", "Vizcaya", "Zamora", "Zaragoza"
         )
 
-        // Adaptador para el Spinner de ubicación
         val ubicacionAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, provincias)
         ubicacionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         ubispinner.adapter = ubicacionAdapter

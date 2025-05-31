@@ -30,13 +30,13 @@ class RegisterActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         val editTextEmail = findViewById<EditText>(R.id.email_edit_text)
-        val user_edit_text = findViewById<EditText>(R.id.user_edit_text)
+        val userEditText = findViewById<EditText>(R.id.user_edit_text)
         val editTextPassword = findViewById<EditText>(R.id.password_edit_text)
         val btnRegister = findViewById<Button>(R.id.button_register)
 
         btnRegister.setOnClickListener {
             val email = editTextEmail.text.toString().trim()
-            val userName = user_edit_text.text.toString().trim()
+            val userName = userEditText.text.toString().trim()
             val password = editTextPassword.text.toString().trim()
 
             // Validar campos

@@ -55,11 +55,6 @@ class MisSubidasActivity : AppCompatActivity() {
                         precio = doc.getString("precio") ?: "",
                         ubicacion = doc.getString("ubicacion") ?: "",
                         imagen = doc.getString("imagen") ?: "",
-                        subidoPor = "",      // no usado aquí
-                        subidoPorNombre = "",      // no usado aquí
-                        descripcion = "",      // no usado aquí
-                        anio = "",      // no usado aquí
-                        km = ""       // no usado aquí
                     )
                     listaSubidas.add(coche)
                 }
@@ -71,7 +66,6 @@ class MisSubidasActivity : AppCompatActivity() {
     }
 
     private fun eliminarCocheSubido(coche: Coche) {
-        // 1) Borramos el documento del coche
         coche.id?.let {
             db.collection("coches").document(it)
                 .delete()

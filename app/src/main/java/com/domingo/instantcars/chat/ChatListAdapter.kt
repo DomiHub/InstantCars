@@ -66,7 +66,7 @@ class ChatListAdapter(
                         holder.avatar.setImageResource(R.drawable.usuario)
                     }
                 } else {
-                    holder.avatar.setImageResource(R.drawable.usuario) // Imagen por defecto
+                    holder.avatar.setImageResource(R.drawable.usuario)
                 }
             }
             .addOnFailureListener {

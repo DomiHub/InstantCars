@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Encabezado -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="300dp"
@@ -47,7 +46,6 @@
                 android:text="@string/Usuario"
                 android:textSize="20sp" />
 
-            <!-- RatingBar justo debajo del nombre -->
             <RatingBar
                 android:id="@+id/rating_bar_reputation"
                 style="?android:attr/ratingBarStyleSmall"
@@ -75,7 +73,6 @@
 
         </RelativeLayout>
 
-        <!-- Card de subidas -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -125,7 +122,6 @@
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
-        <!-- Nombre de usuario solo visible -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

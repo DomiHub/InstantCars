@@ -28,9 +28,9 @@ class PortalActivity : AppCompatActivity() {
 
         comprobarSesion()
 
-        val button_GoTo_create_account = findViewById<Button>(R.id.button_GoTo_create_account)
+        val buttonGoToCreateAccount = findViewById<Button>(R.id.button_GoTo_create_account)
 
-        button_GoTo_create_account.setOnClickListener {
+        buttonGoToCreateAccount.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
@@ -38,11 +38,11 @@ class PortalActivity : AppCompatActivity() {
         //Evento para logearse por hacer
         val auth = FirebaseAuth.getInstance()
 
-        val button_login = findViewById<Button>(R.id.button_login)
+        val buttonLogin = findViewById<Button>(R.id.button_login)
         val editTextEmail = findViewById<EditText>(R.id.email_edit_text)
         val editTextPassword = findViewById<EditText>(R.id.password_edit_text)
 
-        button_login.setOnClickListener {
+        buttonLogin.setOnClickListener {
             val email = editTextEmail.text.toString().trim()
             val password = editTextPassword.text.toString().trim()
 
@@ -60,7 +60,7 @@ class PortalActivity : AppCompatActivity() {
 
                         val intent = Intent(this, MainPageActivity::class.java)
                         startActivity(intent)
-                        finish() // Evita que vuelva a la pantalla de login con el botón atrás
+                        finish()
 
                     } else {
                         Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_LONG)
